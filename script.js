@@ -74,12 +74,44 @@
     if (!prefersReduced) setInterval(() => to(index + 1), 6000);
   });
 
-  // Enhanced Form validation
+  // Enhanced Form validation with micro-interactions
   document.querySelectorAll('[data-validate]').forEach((form) => {
+    // Add focus animations to form inputs
+    form.querySelectorAll('input, textarea, select').forEach(input => {
+      input.addEventListener('focus', () => {
+        if (!prefersReduced) {
+          input.style.transform = 'scale(1.02)';
+          input.style.boxShadow = '0 0 0 3px rgba(125,95,255,0.3)';
+        }
+      });
+      
+      input.addEventListener('blur', () => {
+        if (!prefersReduced) {
+          input.style.transform = 'scale(1)';
+          input.style.boxShadow = '';
+        }
+      });
+    });
+    
+    // Add pulse animation to submit button on hover
+    const submitBtn = form.querySelector('.form__submit');
+    if (submitBtn) {
+      submitBtn.addEventListener('mouseenter', () => {
+        if (!prefersReduced) {
+          submitBtn.style.animation = 'pulse 1s ease-in-out infinite';
+        }
+      });
+      
+      submitBtn.addEventListener('mouseleave', () => {
+        if (!prefersReduced) {
+          submitBtn.style.animation = '';
+        }
+      });
+    }
+    
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const status = form.querySelector('.form__status');
-      const submitBtn = form.querySelector('.form__submit');
       const btnText = submitBtn?.querySelector('.btn-text');
       const btnLoading = submitBtn?.querySelector('.btn-loading');
       
@@ -96,13 +128,20 @@
         const ok = input && rule(String(input.value || ''));
         if (!ok) {
           valid = false;
-          if (error) error.textContent = msg;
-        } else if (error) error.textContent = '';
+          if (error) {
+            error.textContent = msg;
+            error.style.animation = 'slideInLeft 0.3s ease-out';
+          }
+        } else if (error) {
+          error.textContent = '';
+          error.style.animation = '';
+        }
       });
       
       if (!valid) {
         status && (status.textContent = 'Rett feil markert over.');
         status && (status.style.color = 'var(--danger)');
+        status && (status.style.animation = 'slideInLeft 0.3s ease-out');
         return;
       }
       
@@ -117,6 +156,7 @@
       setTimeout(() => {
         status && (status.textContent = 'Takk! Vi sender deg et tilbud innen 24 timer.');
         status && (status.style.color = 'var(--ok)');
+        status && (status.style.animation = 'shimmer 2s ease-in-out');
         
         if (btnText && btnLoading) {
           btnText.style.display = 'flex';
@@ -257,6 +297,62 @@
     });
   });
 
+  // Enhanced tilt hover for cards
+  document.querySelectorAll('[data-tilt]').forEach((el) => {
+    el.addEventListener('mousemove', (e) => {
+      if (prefersReduced) return;
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+      
+      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+      el.style.transition = 'transform 0.1s ease-out';
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      if (prefersReduced) return;
+      el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      el.style.transition = 'transform 0.3s ease-out';
+    });
+  });
+
+  // Navigation enhancements
+  document.querySelectorAll('.menu a').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      if (!prefersReduced) {
+        link.style.transform = 'translateY(-2px)';
+        link.style.textShadow = '0 0 10px rgba(125,95,255,0.5)';
+      }
+    });
+    
+    link.addEventListener('mouseleave', () => {
+      if (!prefersReduced) {
+        link.style.transform = 'translateY(0)';
+        link.style.textShadow = '';
+      }
+    });
+  });
+
+  // Logo float animation on hover
+  const brandLogo = document.querySelector('.brand__logo');
+  if (brandLogo) {
+    brandLogo.addEventListener('mouseenter', () => {
+      if (!prefersReduced) {
+        brandLogo.style.animation = 'float 2s ease-in-out infinite';
+      }
+    });
+    
+    brandLogo.addEventListener('mouseleave', () => {
+      if (!prefersReduced) {
+        brandLogo.style.animation = '';
+      }
+    });
+  }
+
   // Scroll progress indicator
   const scrollProgress = document.createElement('div');
   scrollProgress.style.cssText = `
@@ -390,7 +486,7 @@
     counterObserver.observe(el);
   });
 
-  // Mouse parallax for hero elements
+  // Enhanced mouse parallax for hero elements and sections
   const hero = document.querySelector('.hero');
   if (hero && !prefersReduced) {
     hero.addEventListener('mousemove', (e) => {
@@ -414,29 +510,131 @@
     });
   }
 
-  // Typing animation for demo chat
-  const typingElements = document.querySelectorAll('[data-typing-text]');
-  if (typingElements.length && !prefersReduced) {
+  // Extended parallax for other sections
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(section => {
+    if (!prefersReduced) {
+      section.addEventListener('mousemove', (e) => {
+        const rect = section.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        
+        // Apply subtle parallax to section backgrounds
+        section.style.backgroundPosition = `${50 + (x - 0.5) * 10}% ${50 + (y - 0.5) * 10}%`;
+        
+        // Add floating effect to cards in section
+        const cards = section.querySelectorAll('.pricing-card, .review-card, .metric-card');
+        cards.forEach((card, index) => {
+          const delay = index * 0.1;
+          const intensity = 5 + (index % 3) * 2;
+          card.style.transform = `translate(${(x - 0.5) * intensity}px, ${(y - 0.5) * intensity}px)`;
+          card.style.transition = `transform ${0.3 + delay}s ease-out`;
+        });
+      });
+      
+      section.addEventListener('mouseleave', () => {
+        section.style.backgroundPosition = '50% 50%';
+        const cards = section.querySelectorAll('.pricing-card, .review-card, .metric-card');
+        cards.forEach(card => {
+          card.style.transform = 'translate(0, 0)';
+        });
+      });
+    }
+  });
+
+  // Add gradient shift to section backgrounds
+  const addGradientShift = () => {
+    sections.forEach(section => {
+      if (!prefersReduced) {
+        section.style.background = `linear-gradient(135deg, 
+          color-mix(in oklab, var(--surface) 98%, transparent), 
+          color-mix(in oklab, var(--surface-2) 95%, transparent)
+        )`;
+        section.style.backgroundSize = '200% 200%';
+        section.style.animation = 'gradientShift 8s ease-in-out infinite';
+      }
+    });
+  };
+  
+  addGradientShift();
+
+  // Enhanced typing animation for demo chat with sequential flow
+  const demoChat = document.querySelector('[data-demo-chat]');
+  if (demoChat && !prefersReduced) {
     const typeText = (element, text, speed = 30) => {
-      element.textContent = '';
-      let i = 0;
-      const timer = setInterval(() => {
-        if (i < text.length) {
-          element.textContent += text.charAt(i);
-          i++;
-        } else {
-          clearInterval(timer);
-        }
-      }, speed);
+      return new Promise((resolve) => {
+        element.innerHTML = '';
+        let i = 0;
+        const timer = setInterval(() => {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+          } else {
+            clearInterval(timer);
+            resolve();
+          }
+        }, speed);
+      });
     };
 
-    // Start typing animations with delays
-    setTimeout(() => {
-      typingElements.forEach((el, index) => {
-        const text = el.textContent;
-        setTimeout(() => typeText(el, text), index * 2000);
+    const showMessage = (messageElement) => {
+      return new Promise((resolve) => {
+        messageElement.style.display = 'block';
+        messageElement.style.opacity = '0';
+        messageElement.style.transform = 'translateY(10px)';
+        
+        requestAnimationFrame(() => {
+          messageElement.style.transition = 'all 0.3s ease-out';
+          messageElement.style.opacity = '1';
+          messageElement.style.transform = 'translateY(0)';
+          setTimeout(resolve, 300);
+        });
       });
-    }, 1000);
+    };
+
+    // Start the sequential chat animation
+    const startChatAnimation = async () => {
+      const messages = [
+        { element: document.querySelector('[data-message="1"]'), text: 'Hei! Jeg er din chatbot. Hvordan kan jeg hjelpe deg i dag?' },
+        { element: document.querySelector('[data-message="2"]'), text: null, isUser: true },
+        { element: document.querySelector('[data-message="3"]'), text: 'Fotballakademi for 7-13 år. Følger skoleruta. Pris: 955,- til 2500,- per måned avhengig av antall dager (1-5 dager per uke).' },
+        { element: document.querySelector('[data-message="4"]'), text: '<a href="https://askerfotball.no/lag/utviklingslag/akademi" target="_blank" class="btn btn--primary btn--small" style="display: inline-block; padding: 8px 16px; background: var(--primary); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 8px;">Meld deg på her</a>' }
+      ];
+
+      for (let i = 0; i < messages.length; i++) {
+        const message = messages[i];
+        
+        if (!message.element) {
+          continue;
+        }
+        
+        // Show the message container
+        await showMessage(message.element);
+        
+        // If it's a typing message, animate the text
+        if (message.text) {
+          const textElement = message.element.querySelector('[data-typing-text]');
+          if (textElement) {
+            // Check if the text contains HTML (like the button)
+            if (message.text.includes('<a href=')) {
+              // For HTML content, don't use typing animation, just set it directly
+              textElement.innerHTML = message.text;
+            } else {
+              // For regular text, use typing animation
+              await typeText(textElement, message.text);
+            }
+          }
+        }
+        
+        // Wait a bit before showing the next message
+        if (i < messages.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 800));
+        }
+      }
+    };
+
+    // Start animation after a short delay
+    setTimeout(startChatAnimation, 1500);
   }
 
   // Counter animations for hero stats
@@ -644,8 +842,7 @@
     const inputs = {
       emailsPerDay: calculator.querySelector('#emails-per-day'),
       timePerEmail: calculator.querySelector('#time-per-email'),
-      hourlyRate: calculator.querySelector('#hourly-rate'),
-      workDays: calculator.querySelector('#work-days')
+      hourlyRate: calculator.querySelector('#hourly-rate')
     };
     
     const results = {
@@ -655,13 +852,13 @@
     };
     
     const chartBars = calculator.querySelectorAll('.chart__bar');
-    const chatbotPrice = 14900; // Base price for chatbot
+    const chatbotPrice = 1000; // Updated price for chatbot
+    const workDays = 22; // Fixed work days per month
     
     const calculateROI = () => {
       const emailsPerDay = parseInt(inputs.emailsPerDay.value) || 0;
       const timePerEmail = parseInt(inputs.timePerEmail.value) || 0;
       const hourlyRate = parseInt(inputs.hourlyRate.value) || 0;
-      const workDays = parseInt(inputs.workDays.value) || 0;
       
       // Calculate current monthly time spent
       const monthlyEmails = emailsPerDay * workDays;
@@ -673,14 +870,14 @@
       const reductionRate = 0.8;
       const hoursSaved = monthlyHours * reductionRate;
       const costSaved = monthlyCost * reductionRate;
-      const roiMonths = chatbotPrice / costSaved;
+      const roiMonths = costSaved > 0 ? chatbotPrice / costSaved : 0;
       
       // Animate results
       animateValue(results.hoursSaved, 0, hoursSaved, 1500, 1);
       animateValue(results.costSaved, 0, costSaved, 1500, 0);
       animateValue(results.roiMonths, 0, roiMonths, 1500, 1);
       
-      // Update chart bars
+      // Update chart bars with modern animation
       updateChartBars(hoursSaved, monthlyHours);
     };
     
@@ -708,17 +905,22 @@
       const savedPercentage = (hoursSaved / monthlyHours) * 100;
       const remainingPercentage = 100 - savedPercentage;
       
-      // Animate chart bars
+      // Animate chart bars with modern fill effect
       chartBars.forEach(bar => {
-        if (bar.classList.contains('chart__bar--after')) {
-          bar.style.width = `${remainingPercentage}%`;
+        const fill = bar.querySelector('.chart__bar__fill');
+        if (bar.classList.contains('chart__bar--after') && fill) {
+          // Set CSS custom property for animation
+          fill.style.setProperty('--target-width', `${remainingPercentage}%`);
+          fill.style.width = `${remainingPercentage}%`;
         }
       });
     };
     
     // Add event listeners to all inputs
     Object.values(inputs).forEach(input => {
-      input.addEventListener('input', calculateROI);
+      if (input) {
+        input.addEventListener('input', calculateROI);
+      }
     });
     
     // Initial calculation
@@ -796,24 +998,34 @@
     });
   });
 
-  // Staggered animation for feature cards
+  // Enhanced staggered animation for feature cards
   const featureCards = document.querySelectorAll('.feature-card');
   const featureObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, index * 100);
+          entry.target.style.transform = 'translateY(0) rotateX(0deg)';
+          
+          // Add icon rotation animation
+          const icon = entry.target.querySelector('.feature-card__icon');
+          if (icon) {
+            icon.style.animation = 'rotateIn 0.6s ease-out';
+          }
+          
+          // Add shimmer effect
+          entry.target.classList.add('shimmer-effect');
+        }, index * 150);
         featureObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
 
-  featureCards.forEach(card => {
+  featureCards.forEach((card, index) => {
     card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    card.style.transform = 'translateY(30px) rotateX(15deg)';
+    card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    card.style.animationDelay = `${index * 0.1}s`;
     featureObserver.observe(card);
   });
 
@@ -867,6 +1079,344 @@
     card.style.animationPlayState = 'paused';
     observer.observe(card);
   });
+})();
+
+// Advanced Transformation Showcase Interactive Slider
+(function() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const transformationSlider = document.querySelector('[data-transformation-slider]');
+  
+  if (transformationSlider && !prefersReduced) {
+    const sliderThumb = transformationSlider.querySelector('[data-slider-thumb]');
+    const sliderTrack = transformationSlider.querySelector('.slider__track');
+    const progressFill = document.querySelector('[data-progress-fill]');
+    const progressStats = document.querySelectorAll('[data-stat]');
+    const workflowSteps = transformationSlider.querySelectorAll('[data-step]');
+    
+    let isDragging = false;
+    let currentPosition = 0.5; // Start in middle (50%)
+    
+    // Initialize animation
+    const initializeTransformation = () => {
+      updateTransformation(currentPosition);
+      animateWorkflowSteps();
+      animateProgressStats();
+    };
+    
+    // Update transformation based on slider position
+    const updateTransformation = (position) => {
+      // Update slider thumb position
+      const thumbPosition = (position - 0.5) * 100;
+      sliderThumb.style.left = `calc(50% + ${thumbPosition}px)`;
+      
+      // Update progress bar
+      progressFill.style.width = `${position * 100}%`;
+      
+      // Update state visibility and effects
+      const beforeState = transformationSlider.querySelector('.transformation__state--before');
+      const afterState = transformationSlider.querySelector('.transformation__state--after');
+      
+      // Calculate opacity and transform based on position
+      const beforeOpacity = Math.max(0.3, 1 - position);
+      const afterOpacity = Math.max(0.3, position);
+      
+      beforeState.style.opacity = beforeOpacity;
+      afterState.style.opacity = afterOpacity;
+      
+      // Add transform effects
+      const beforeTransform = `translateX(${(1 - position) * -20}px) scale(${0.9 + (1 - position) * 0.1})`;
+      const afterTransform = `translateX(${(1 - position) * 20}px) scale(${0.9 + position * 0.1})`;
+      
+      beforeState.style.transform = beforeTransform;
+      afterState.style.transform = afterTransform;
+      
+      // Update workflow step animations
+      workflowSteps.forEach((step, index) => {
+        const stepNumber = parseInt(step.getAttribute('data-step'));
+        const delay = stepNumber * 200;
+        
+        if (position > 0.3) {
+          setTimeout(() => {
+            step.style.opacity = '1';
+            step.style.transform = 'translateX(0) scale(1)';
+          }, delay);
+        } else {
+          step.style.opacity = '0.6';
+          step.style.transform = 'translateX(-10px) scale(0.95)';
+        }
+      });
+    };
+    
+    // Animate workflow steps
+    const animateWorkflowSteps = () => {
+      workflowSteps.forEach((step, index) => {
+        setTimeout(() => {
+          step.style.opacity = '0';
+          step.style.transform = 'translateX(-20px) scale(0.9)';
+          step.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+          
+          setTimeout(() => {
+            step.style.opacity = '1';
+            step.style.transform = 'translateX(0) scale(1)';
+          }, 100);
+        }, index * 300);
+      });
+    };
+    
+    // Animate progress stats
+    const animateProgressStats = () => {
+      progressStats.forEach((stat, index) => {
+        setTimeout(() => {
+          const value = stat.textContent;
+          let currentValue = 0;
+          const increment = parseFloat(value.replace('%', '')) / 60;
+          
+          const animateValue = () => {
+            if (currentValue < parseFloat(value.replace('%', ''))) {
+              currentValue += increment;
+              stat.textContent = Math.floor(currentValue) + '%';
+              requestAnimationFrame(animateValue);
+            } else {
+              stat.textContent = value;
+            }
+          };
+          
+          animateValue();
+        }, index * 200);
+      });
+    };
+    
+    // Mouse events for slider
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+      
+      const rect = sliderTrack.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percentage = Math.max(0, Math.min(1, x / rect.width));
+      
+      currentPosition = percentage;
+      updateTransformation(currentPosition);
+    };
+    
+    const handleMouseUp = () => {
+      isDragging = false;
+      sliderThumb.style.cursor = 'grab';
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+    
+    const handleMouseDown = (e) => {
+      e.preventDefault();
+      isDragging = true;
+      sliderThumb.style.cursor = 'grabbing';
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    };
+    
+    // Touch events for mobile
+    const handleTouchMove = (e) => {
+      if (!isDragging) return;
+      
+      const rect = sliderTrack.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const percentage = Math.max(0, Math.min(1, x / rect.width));
+      
+      currentPosition = percentage;
+      updateTransformation(currentPosition);
+    };
+    
+    const handleTouchEnd = () => {
+      isDragging = false;
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+    
+    const handleTouchStart = (e) => {
+      e.preventDefault();
+      isDragging = true;
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchend', handleTouchEnd);
+    };
+    
+    // Add event listeners
+    sliderThumb.addEventListener('mousedown', handleMouseDown);
+    sliderTrack.addEventListener('mousedown', (e) => {
+      const rect = sliderTrack.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      currentPosition = Math.max(0, Math.min(1, x / rect.width));
+      updateTransformation(currentPosition);
+    });
+    
+    sliderThumb.addEventListener('touchstart', handleTouchStart);
+    sliderTrack.addEventListener('touchstart', (e) => {
+      const rect = sliderTrack.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      currentPosition = Math.max(0, Math.min(1, x / rect.width));
+      updateTransformation(currentPosition);
+    });
+    
+    // Auto-animation on scroll into view
+    const transformationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            initializeTransformation();
+            
+            // Auto-animate to show transformation
+            let autoPosition = 0;
+            const autoAnimate = () => {
+              autoPosition += 0.02;
+              if (autoPosition <= 1) {
+                updateTransformation(autoPosition);
+                requestAnimationFrame(autoAnimate);
+              }
+            };
+            
+            setTimeout(autoAnimate, 1000);
+          }, 500);
+          
+          transformationObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    transformationObserver.observe(transformationSlider);
+    
+    // Add hover effects for workflow steps with neural pulse
+    workflowSteps.forEach(step => {
+      const stepIcon = step.querySelector('.step__icon');
+      
+      step.addEventListener('mouseenter', () => {
+        if (!prefersReduced) {
+          step.style.transform = 'translateX(8px) scale(1.02)';
+          step.style.boxShadow = '0 8px 24px rgba(125,95,255,0.2)';
+          if (stepIcon) {
+            stepIcon.style.animation = 'neuralPulse 1s ease-in-out infinite';
+          }
+        }
+      });
+      
+      step.addEventListener('mouseleave', () => {
+        if (!prefersReduced) {
+          step.style.transform = 'translateX(0) scale(1)';
+          step.style.boxShadow = '';
+          if (stepIcon) {
+            stepIcon.style.animation = '';
+          }
+        }
+      });
+    });
+    
+    // Add data stream effect between workflow steps
+    const addDataStreams = () => {
+      workflowSteps.forEach((step, index) => {
+        if (index < workflowSteps.length - 1) {
+          const nextStep = workflowSteps[index + 1];
+          const stream = document.createElement('div');
+          stream.className = 'data-stream-between';
+          stream.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: dataStream 3s linear infinite;
+            animation-delay: ${index * 0.5}s;
+            z-index: 1;
+          `;
+          step.style.position = 'relative';
+          step.appendChild(stream);
+        }
+      });
+    };
+    
+    addDataStreams();
+    
+    // Add particle effects for enhanced visual appeal
+    const addParticleEffects = () => {
+      const beforeState = transformationSlider.querySelector('.transformation__state--before');
+      const afterState = transformationSlider.querySelector('.transformation__state--after');
+      
+      // Create floating particles with enhanced effects
+      for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'transformation-particle';
+        particle.style.cssText = `
+          position: absolute;
+          width: ${Math.random() * 4 + 2}px;
+          height: ${Math.random() * 4 + 2}px;
+          background: linear-gradient(45deg, var(--primary), var(--accent));
+          border-radius: 50%;
+          pointer-events: none;
+          opacity: 0.7;
+          animation: particleFloat 8s ease-in-out infinite;
+          animation-delay: ${i * 1.2}s;
+          box-shadow: 0 0 10px rgba(125,95,255,0.5);
+        `;
+        
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
+        if (i % 2 === 0) {
+          beforeState.appendChild(particle);
+        } else {
+          afterState.appendChild(particle);
+        }
+      }
+      
+      // Add neural network connections
+      for (let i = 0; i < 3; i++) {
+        const connection = document.createElement('div');
+        connection.className = 'neural-connection';
+        connection.style.cssText = `
+          position: absolute;
+          top: ${Math.random() * 80 + 10}%;
+          left: ${Math.random() * 80 + 10}%;
+          width: ${Math.random() * 100 + 50}px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--primary), transparent);
+          animation: neuralPulse 4s ease-in-out infinite;
+          animation-delay: ${i * 1.5}s;
+          transform: rotate(${Math.random() * 60 - 30}deg);
+          opacity: 0.6;
+        `;
+        
+        if (i % 2 === 0) {
+          beforeState.appendChild(connection);
+        } else {
+          afterState.appendChild(connection);
+        }
+      }
+    };
+    
+    // Add particle animation keyframes
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes floatParticle {
+        0%, 100% { 
+          transform: translateY(0px) translateX(0px) scale(1);
+          opacity: 0.6;
+        }
+        25% { 
+          transform: translateY(-20px) translateX(10px) scale(1.2);
+          opacity: 0.8;
+        }
+        50% { 
+          transform: translateY(-10px) translateX(-5px) scale(0.8);
+          opacity: 0.4;
+        }
+        75% { 
+          transform: translateY(-15px) translateX(8px) scale(1.1);
+          opacity: 0.7;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Initialize particle effects
+    addParticleEffects();
+  }
 })();
 
 
