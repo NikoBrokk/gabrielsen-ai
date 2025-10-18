@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GABRIELSEN AI · Praktisk AI for SMB i Asker</title>
+    <meta name="description" content="GABRIELSEN AI hjelper SMB-bedrifter i Asker å ta i bruk praktisk AI for å effektivisere arbeid, automatisere oppgaver og skape målbare resultater." />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="GABRIELSEN AI" />
+    <meta property="og:description" content="Praktisk AI for SMB i Asker – effektivisering, automasjon og målbar effekt." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nb_NO" />
+    <meta property="og:url" content="https://gabrielsen.ai/" />
+    <meta property="og:image" content="/assets/og-image.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/assets/logo-placeholder.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script defer src="/script.js"></script>
+
+    <meta name="theme-color" content="#0b0f14" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Hopp til innhold</a>
+
+    <!-- Header / Nav -->
+    <header class="site-header" data-nav>
+      <div class="container nav">
+        <a href="#top" class="brand" aria-label="GABRIELSEN AI logo lenke til topp">
+          <img src="/assets/logo-placeholder.svg" alt="GABRIELSEN AI logo" class="brand__logo" width="36" height="36" decoding="async" />
+          <span class="brand__name">GABRIELSEN AI</span>
+        </a>
+
+        <nav class="primary-nav" aria-label="Hovedmeny">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Åpne meny" data-menu-toggle>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+          </button>
+          <ul id="menu" class="menu" data-menu>
+            <li><a href="#tjenester" data-scroll>Meny: Tjenester</a></li>
+            <li><a href="#arbeid" data-scroll>Vårt arbeid</a></li>
+            <li><a href="#anmeldelser" data-scroll>Anmeldelser</a></li>
+            <li><a href="#kontakt" data-scroll>Kontakt</a></li>
+            <li class="menu__cta"><a href="#kontakt" class="btn btn--primary" data-scroll>Kontakt oss</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero -->
+      <section id="top" class="section hero" aria-label="Intro" data-observe>
+        <div class="hero__bg" aria-hidden="true">
+          <canvas id="mesh" class="mesh" aria-hidden="true"></canvas>
+          <div class="hero__gradient" aria-hidden="true"></div>
+        </div>
+        <div class="container hero__content">
+          <div class="hero__logo">
+            <img src="/assets/logo-placeholder.svg" alt="GABRIELSEN AI logo" width="72" height="72" decoding="async" />
+          </div>
+          <h1 class="display">GABRIELSEN AI</h1>
+          <p class="lede">
+            Vi er en lokal AI‑partner i Asker som hjelper SMB‑bedrifter å ta i bruk praktisk AI. Vi bygger løsninger som reduserer manuelt arbeid, øker kvaliteten og frigjør tid – uten tunge prosjekter.
+          </p>
+          <p class="lede">
+            Eie og drift ved Nikolai Brokhaug Gabrielsen. Nettopp fordi vi er små og lokale, får du hands‑on gjennomføring, kort vei fra idé til verdi og tydelig effekt.
+          </p>
+          <div class="hero__ctas">
+            <a href="#kontakt" class="btn btn--primary btn--glow" data-scroll data-magnetic>Kontakt oss</a>
+            <a href="#tjenester" class="btn btn--ghost" data-scroll>Les mer</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tjenester -->
+      <section id="tjenester" class="section services" aria-labelledby="tjenester-title" data-observe>
+        <div class="container">
+          <h2 id="tjenester-title" class="section__title">Tjenester</h2>
+          <p class="section__intro">Konkret, målbar effekt. Velg en startpakken som passer – vi tilpasser til din drift.</p>
+
+          <div class="service-grid">
+            <!-- Service Card 1 -->
+            <article class="card service" data-tilt>
+              <div class="card__head">
+                <h3 class="card__title">E‑postassistent</h3>
+                <p class="price">Fra 12 900 kr · 1–2 uker</p>
+              </div>
+              <ul class="card__bullets">
+                <li>Foreslår svar i din tone</li>
+                <li>Prioriterer innboks og markerer avvik</li>
+                <li>Henter info fra dokumenter/CRM</li>
+                <li>Reduserer manuelt arbeid</li>
+              </ul>
+              <button class="card__more" aria-expanded="false" data-accordion-target>
+                Les mer
+              </button>
+              <div class="card__expand" hidden data-accordion-panel>
+                <p>
+                  Vi kobler til din e‑post og kunnskapskilder med klare rammer. Assistenten foreslår svar, du godkjenner – trygt og kontrollerbart.
+                </p>
+              </div>
+            </article>
+
+            <!-- Service Card 2 -->
+            <article class="card service" data-tilt>
+              <div class="card__head">
+                <h3 class="card__title">Chatbot for nettside</h3>
+                <p class="price">Fra 14 900 kr · 1–2 uker</p>
+              </div>
+              <ul class="card__bullets">
+                <li>24/7 svar basert på dine tekster</li>
+                <li>Sender leads til e‑post/CRM</li>
+                <li>Analytikk: hva kundene spør om</li>
+                <li>Bedre tilgjengelighet</li>
+              </ul>
+              <button class="card__more" aria-expanded="false" data-accordion-target>Les mer</button>
+              <div class="card__expand" hidden data-accordion-panel>
+                <p>
+                  Rask installasjon med et skript. Vi trener på innholdet ditt, setter tone of voice, og ivaretar personvern.
+                </p>
+              </div>
+            </article>
+
+            <!-- Service Card 3 -->
+            <article class="card service" data-tilt>
+              <div class="card__head">
+                <h3 class="card__title">Dokumentoppsummering</h3>
+                <p class="price">Fra 9 900 kr · 3–5 dager</p>
+              </div>
+              <ul class="card__bullets">
+                <li>Trekk ut beslutningsgrunnlag</li>
+                <li>Mindre feil og oversettelser</li>
+                <li>Standardiserte maler for team</li>
+                <li>Raskere leveranser</li>
+              </ul>
+              <button class="card__more" aria-expanded="false" data-accordion-target>Les mer</button>
+              <div class="card__expand" hidden data-accordion-panel>
+                <p>
+                  Skreddersydd pipeline for avtaler, rapporter og kundedokumenter. Lever i PDF/Word/Slack – dere velger.
+                </p>
+              </div>
+            </article>
+
+            <!-- Service Card 4 -->
+            <article class="card service" data-tilt>
+              <div class="card__head">
+                <h3 class="card__title">Automatisert rapportering</h3>
+                <p class="price">Fra 24 900 kr · 2–4 uker</p>
+              </div>
+              <ul class="card__bullets">
+                <li>Henter tall fra kilder dere allerede bruker</li>
+                <li>Forklarende tekst med AI</li>
+                <li>Varsler avvik og trender</li>
+                <li>Lav friksjon i drift</li>
+              </ul>
+              <button class="card__more" aria-expanded="false" data-accordion-target>Les mer</button>
+              <div class="card__expand" hidden data-accordion-panel>
+                <p>
+                  Vi bygger en robust automatikk med tydelige fallbacks. Dere får rapporter som faktisk blir lest og brukt.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vårt arbeid -->
+      <section id="arbeid" class="section work" aria-labelledby="arbeid-title" data-observe>
+        <div class="container work__grid">
+          <div class="work__text">
+            <h2 id="arbeid-title" class="section__title">Vårt arbeid</h2>
+            <p>
+              Vi starter alltid med det konkrete problemet. Sammen beskriver vi dagens metode og hva som tar tid. Deretter bygger vi en enkel første versjon som beviser effekt – før vi skalerer.
+            </p>
+            <p>
+              Asker er hjemmebane. Vi tror lokal forankring gir bedre samarbeid og raskere læring. Målet er å gjøre AI til en trygg del av driften, ikke et «prosjekt på siden».
+            </p>
+            <p>
+              Vi har ingen tunge titler – bare sterk vilje til å levere. Nettopp derfor legger vi kvalitet i selve leveransen: tydelig kommunikasjon, rene løsninger og målbare resultater.
+            </p>
+          </div>
+          <figure class="work__portrait glass">
+            <img src="/assets/portraits/owner-placeholder.svg" alt="Portrett av eier, Nikolai Brokhaug Gabrielsen" width="720" height="900" loading="lazy" decoding="async" />
+          </figure>
+        </div>
+      </section>
+
+      <!-- Anmeldelser -->
+      <section id="anmeldelser" class="section reviews" aria-labelledby="reviews-title" data-observe>
+        <div class="container">
+          <h2 id="reviews-title" class="section__title">Anmeldelser</h2>
+          <div class="carousel" data-carousel>
+            <div class="carousel__track" data-carousel-track>
+              <article class="review card">
+                <div class="review__logo">
+                  <img src="/assets/logos/asker-fotball.svg" alt="Asker Fotball" width="120" height="36" loading="lazy" decoding="async" />
+                </div>
+                <blockquote>
+                  «Vi fikk en enkel chatbot på plass som tok unna spørsmål fra foreldre og spillere. Bedre informasjonsflyt og færre e‑poster på kveldene.»
+                </blockquote>
+                <p class="review__author">Rolf Magne Walstad, Asker Fotball</p>
+              </article>
+
+              <article class="review card">
+                <div class="review__logo">
+                  <img src="/assets/logos/asker-tennis.svg" alt="Asker Tennis" width="120" height="36" loading="lazy" decoding="async" />
+                </div>
+                <blockquote>
+                  «Automatisert rapportering gjorde at vi raskt så kapasitetsutfordringer. Tydelige grafer og forklarende tekst – lett å ta handling.»
+                </blockquote>
+                <p class="review__author">Oskar Johan Hov, Asker Tennis</p>
+              </article>
+
+              <article class="review card">
+                <div class="review__logo">
+                  <img src="/assets/logos/gerts-cashmere.svg" alt="Gerts Cashmere" width="120" height="36" loading="lazy" decoding="async" />
+                </div>
+                <blockquote>
+                  «E‑postassistenten ga oss konsistente svar i vår stemme, kortere responstid og mindre manuelt arbeid på kundeservice.»
+                </blockquote>
+                <p class="review__author">Ferdinand Mohn Pettersen, Gerts Cashmere</p>
+              </article>
+            </div>
+            <div class="carousel__controls">
+              <button class="carousel__btn" data-carousel-prev aria-label="Forrige">‹</button>
+              <button class="carousel__btn" data-carousel-next aria-label="Neste">›</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Kontakt -->
+      <section id="kontakt" class="section contact" aria-labelledby="kontakt-title" data-observe>
+        <div class="container contact__grid">
+          <div class="contact__info">
+            <h2 id="kontakt-title" class="section__title">Kontakt</h2>
+            <ul class="contact__list">
+              <li><strong>E‑post:</strong> <a href="mailto:nikolaibrokhaug@gmail.com">nikolaibrokhaug@gmail.com</a></li>
+              <li><strong>Telefon:</strong> <a href="tel:+4794172428">94172428</a></li>
+              <li><strong>Adresse:</strong> Fjelkensvingen 18, 1395 Hvalstad</li>
+            </ul>
+            <div class="contact__cta">
+              <a class="btn btn--primary btn--glow" href="mailto:nikolaibrokhaug@gmail.com">Send e‑post</a>
+              <a class="btn btn--ghost" href="tel:+4794172428">Ring oss</a>
+            </div>
+          </div>
+
+          <form class="form" novalidate data-validate>
+            <div class="form__row">
+              <label for="navn">Navn</label>
+              <input id="navn" name="navn" type="text" autocomplete="name" required />
+              <p class="form__error" aria-live="polite"></p>
+            </div>
+            <div class="form__row">
+              <label for="epost">E‑post</label>
+              <input id="epost" name="epost" type="email" autocomplete="email" required />
+              <p class="form__error" aria-live="polite"></p>
+            </div>
+            <div class="form__row">
+              <label for="firma">Firma</label>
+              <input id="firma" name="firma" type="text" autocomplete="organization" />
+              <p class="form__error" aria-live="polite"></p>
+            </div>
+            <div class="form__row">
+              <label for="melding">Melding</label>
+              <textarea id="melding" name="melding" rows="4" required></textarea>
+              <p class="form__error" aria-live="polite"></p>
+            </div>
+            <button class="btn btn--primary btn--glow" type="submit">Send</button>
+            <p class="form__status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="year"></span> GABRIELSEN AI · Nikolai Brokhaug Gabrielsen · Asker</p>
+      </div>
+    </footer>
+  </body>
+  </html>
+
+
