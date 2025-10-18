@@ -15,7 +15,7 @@
     <meta property="og:image" content="/assets/og-image.webp" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="icon" href="/assets/logo-placeholder.svg" type="image/svg+xml" />
+    <link rel="icon" href="/assets/logos/GAI.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="/styles.css" />
@@ -30,7 +30,7 @@
     <header class="site-header" data-nav>
       <div class="container nav">
         <a href="#top" class="brand" aria-label="GABRIELSEN AI logo lenke til topp">
-          <img src="/assets/logo-placeholder.svg" alt="GABRIELSEN AI logo" class="brand__logo" width="36" height="36" decoding="async" />
+          <img src="/assets/logos/GAI.png" alt="GABRIELSEN AI logo" class="brand__logo" width="36" height="36" decoding="async" />
           <span class="brand__name">GABRIELSEN AI</span>
         </a>
 
@@ -43,6 +43,7 @@
           <ul id="menu" class="menu" data-menu>
             <li><a href="#tjenester" data-scroll>Meny: Tjenester</a></li>
             <li><a href="#arbeid" data-scroll>Vårt arbeid</a></li>
+            <li><a href="rag-teknologi.html">RAG-teknologi</a></li>
             <li><a href="#anmeldelser" data-scroll>Anmeldelser</a></li>
             <li><a href="#kontakt" data-scroll>Kontakt</a></li>
             <li class="menu__cta"><a href="#kontakt" class="btn btn--primary" data-scroll>Kontakt oss</a></li>
@@ -57,222 +58,756 @@
         <div class="hero__bg" aria-hidden="true">
           <canvas id="mesh" class="mesh" aria-hidden="true"></canvas>
           <div class="hero__gradient" aria-hidden="true"></div>
+          <div class="hero__neural-network" aria-hidden="true"></div>
+          <div class="hero__ai-visuals" aria-hidden="true">
+            <div class="floating-chat-bubble" data-floating-bubble></div>
+            <div class="data-stream" data-data-stream></div>
+            <div class="neural-node" data-neural-node></div>
+          </div>
         </div>
         <div class="container hero__content">
-          <div class="hero__logo">
-            <img src="/assets/logo-placeholder.svg" alt="GABRIELSEN AI logo" width="72" height="72" decoding="async" />
+          <div class="hero__badge">
+            <span class="badge__text">Askerfotball.no bruker vår chatbot</span>
+            <img src="/assets/logos/asker-fotball.png" alt="Asker Fotball" width="24" height="24" class="badge__logo" />
           </div>
-          <h1 class="display">GABRIELSEN AI</h1>
-          <p class="lede">
-            Vi er en lokal AI‑partner i Asker som hjelper SMB‑bedrifter å ta i bruk praktisk AI. Vi bygger løsninger som reduserer manuelt arbeid, øker kvaliteten og frigjør tid – uten tunge prosjekter.
+          <h1 class="display hero__title">
+            <span class="title__line">Din kundeservice</span>
+            <span class="title__line title__line--highlight">automatiseres 24/7</span>
+            <span class="title__line">med RAG-teknologi</span>
+          </h1>
+          <p class="lede hero__pitch">
+            <strong>Stopp å svare på samme spørsmål om og om igjen.</strong> Vår intelligente chatbot kjenner alle dine produkter, priser og prosedyrer – og svarer kundene øyeblikkelig. <strong>Levert på 1-2 uker, fra 14 900 kr.</strong>
           </p>
-          <p class="lede">
-            Eie og drift ved Nikolai Brokhaug Gabrielsen. Nettopp fordi vi er små og lokale, får du hands‑on gjennomføring, kort vei fra idé til verdi og tydelig effekt.
-          </p>
+          <div class="hero__demo-preview">
+            <!-- Dashboard Preview Image -->
+            <div class="dashboard-preview" style="display: none;">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><defs><linearGradient id='dashboard' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%235fe1ff;stop-opacity:0.1'/><stop offset='100%' style='stop-color:%237d5fff;stop-opacity:0.05'/></linearGradient></defs><rect width='400' height='300' fill='url(%23dashboard)' rx='16'/><rect x='20' y='20' width='360' height='40' fill='%235fe1ff' opacity='0.2' rx='8'/><rect x='20' y='80' width='170' height='80' fill='%237d5fff' opacity='0.15' rx='8'/><rect x='210' y='80' width='170' height='80' fill='%235fe1ff' opacity='0.15' rx='8'/><rect x='20' y='180' width='360' height='100' fill='%2333c7ff' opacity='0.1' rx='8'/></svg>" alt="Analytics Dashboard" width="400" height="300" />
+            </div>
+            <div class="demo-chat" data-demo-chat>
+              <div class="demo-chat__header">
+                <div class="demo-chat__dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <span class="demo-chat__title">Din RAG-chatbot i aksjon</span>
+                <div class="demo-chat__status">
+                  <span class="status__indicator"></span>
+                  <span class="status__text">Live</span>
+                </div>
+              </div>
+              <div class="demo-chat__messages">
+                <div class="demo-message demo-message--user">
+                  <span class="demo-message__text">Hei! Hva koster det å leie bane i morgen?</span>
+                </div>
+                <div class="demo-message demo-message--bot">
+                  <span class="demo-message__text" data-typing-text>Hei! For baneleie i morgen har vi følgende priser: 08:00-12:00: 800 kr, 12:00-16:00: 1000 kr, 16:00-20:00: 1200 kr. Vil du booke en tid?</span>
+                </div>
+                <div class="demo-message demo-message--user">
+                  <span class="demo-message__text">Ja, 16:00-20:00 takk</span>
+                </div>
+                <div class="demo-message demo-message--bot">
+                  <span class="demo-message__text" data-typing-text>Perfekt! Jeg har reservert 16:00-20:00 for deg. Sendt bekreftelse til din e-post. Trenger du hjelp med noe annet?</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero__stats">
+              <div class="stat" data-stat-animate>
+                <span class="stat__number" data-counter="80">0</span>
+                <span class="stat__label">% færre e-poster</span>
+              </div>
+              <div class="stat" data-stat-animate>
+                <span class="stat__number" data-counter="24">0</span>
+                <span class="stat__label">timer tilgjengelig</span>
+              </div>
+              <div class="stat" data-stat-animate>
+                <span class="stat__number" data-counter="2">0</span>
+                <span class="stat__label">sekunder responstid</span>
+              </div>
+            </div>
+          </div>
           <div class="hero__ctas">
-            <a href="#kontakt" class="btn btn--primary btn--glow" data-scroll data-magnetic>Kontakt oss</a>
-            <a href="#tjenester" class="btn btn--ghost" data-scroll>Les mer</a>
+            <a href="#demo" class="btn btn--primary btn--glow" data-scroll data-magnetic data-modal-trigger="demo">Se live demo</a>
+            <a href="#kontakt" class="btn btn--ghost" data-scroll>Få din chatbot</a>
+            <a href="#calculator" class="btn btn--outline" data-scroll>Regn ut besparelser</a>
           </div>
         </div>
       </section>
 
-      <!-- Tjenester -->
-      <section id="tjenester" class="section services" aria-labelledby="tjenester-title" data-observe>
+      <!-- Social Proof Banner -->
+      <section class="section social-proof" aria-label="Kundereferanse" data-observe>
         <div class="container">
-          <h2 id="tjenester-title" class="section__title">Tjenester</h2>
-          <p class="section__intro">Konkret, målbar effekt. Velg en startpakken som passer – vi tilpasser til din drift.</p>
-
-          <div class="service-grid">
-            <!-- Service Card 1 -->
-            <article class="card service" data-tilt>
-              <div class="card__head">
-                <h3 class="card__title">E‑postassistent</h3>
-                <p class="price">Fra 12 900 kr · 1–2 uker</p>
+          <div class="social-proof__banner">
+            <div class="social-proof__badge">
+              <img src="/assets/logos/asker-fotball.png" alt="Asker Fotball logo" width="60" height="18" loading="lazy" decoding="async" />
+              <span>bruker vår chatbot</span>
+            </div>
+            <div class="social-proof__metrics">
+              <div class="metric">
+                <span class="metric__number" data-counter="1247">0</span>
+                <span class="metric__label">meldinger håndtert</span>
               </div>
-              <ul class="card__bullets">
-                <li>Foreslår svar i din tone</li>
-                <li>Prioriterer innboks og markerer avvik</li>
-                <li>Henter info fra dokumenter/CRM</li>
-                <li>Reduserer manuelt arbeid</li>
-              </ul>
-              <button class="card__more" aria-expanded="false" data-accordion-target>
-                Les mer
-              </button>
-              <div class="card__expand" hidden data-accordion-panel>
-                <p>
-                  Vi kobler til din e‑post og kunnskapskilder med klare rammer. Assistenten foreslår svar, du godkjenner – trygt og kontrollerbart.
-                </p>
+              <div class="metric">
+                <span class="metric__number" data-counter="1.2">0</span>
+                <span class="metric__label">sekunder responstid</span>
               </div>
-            </article>
-
-            <!-- Service Card 2 -->
-            <article class="card service" data-tilt>
-              <div class="card__head">
-                <h3 class="card__title">Chatbot for nettside</h3>
-                <p class="price">Fra 14 900 kr · 1–2 uker</p>
+              <div class="metric">
+                <span class="metric__number" data-counter="94">0</span>
+                <span class="metric__label">% kundetilfredshet</span>
               </div>
-              <ul class="card__bullets">
-                <li>24/7 svar basert på dine tekster</li>
-                <li>Sender leads til e‑post/CRM</li>
-                <li>Analytikk: hva kundene spør om</li>
-                <li>Bedre tilgjengelighet</li>
-              </ul>
-              <button class="card__more" aria-expanded="false" data-accordion-target>Les mer</button>
-              <div class="card__expand" hidden data-accordion-panel>
-                <p>
-                  Rask installasjon med et skript. Vi trener på innholdet ditt, setter tone of voice, og ivaretar personvern.
-                </p>
-              </div>
-            </article>
-
-            <!-- Service Card 3 -->
-            <article class="card service" data-tilt>
-              <div class="card__head">
-                <h3 class="card__title">Dokumentoppsummering</h3>
-                <p class="price">Fra 9 900 kr · 3–5 dager</p>
-              </div>
-              <ul class="card__bullets">
-                <li>Trekk ut beslutningsgrunnlag</li>
-                <li>Mindre feil og oversettelser</li>
-                <li>Standardiserte maler for team</li>
-                <li>Raskere leveranser</li>
-              </ul>
-              <button class="card__more" aria-expanded="false" data-accordion-target>Les mer</button>
-              <div class="card__expand" hidden data-accordion-panel>
-                <p>
-                  Skreddersydd pipeline for avtaler, rapporter og kundedokumenter. Lever i PDF/Word/Slack – dere velger.
-                </p>
-              </div>
-            </article>
-
-            <!-- Service Card 4 -->
-            <article class="card service" data-tilt>
-              <div class="card__head">
-                <h3 class="card__title">Automatisert rapportering</h3>
-                <p class="price">Fra 24 900 kr · 2–4 uker</p>
-              </div>
-              <ul class="card__bullets">
-                <li>Henter tall fra kilder dere allerede bruker</li>
-                <li>Forklarende tekst med AI</li>
-                <li>Varsler avvik og trender</li>
-                <li>Lav friksjon i drift</li>
-              </ul>
-              <button class="card__more" aria-expanded="false" data-accordion-target>Les mer</button>
-              <div class="card__expand" hidden data-accordion-panel>
-                <p>
-                  Vi bygger en robust automatikk med tydelige fallbacks. Dere får rapporter som faktisk blir lest og brukt.
-                </p>
-              </div>
-            </article>
+            </div>
+          </div>
+          <div class="social-proof__ticker">
+            <div class="ticker__track" data-ticker>
+              <span class="ticker__item">"Chatbotten svarte raskt på alle spørsmålene mine"</span>
+              <span class="ticker__item">"Fant ut alt jeg trengte uten å vente"</span>
+              <span class="ticker__item">"Så enkelt å booke bane via chat"</span>
+              <span class="ticker__item">"Perfekt for oss som jobber kvelder"</span>
+              <span class="ticker__item">"Sparer masse tid på kundeservice"</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Vårt arbeid -->
-      <section id="arbeid" class="section work" aria-labelledby="arbeid-title" data-observe>
-        <div class="container work__grid">
-          <div class="work__text">
-            <h2 id="arbeid-title" class="section__title">Vårt arbeid</h2>
-            <p>
-              Vi starter alltid med det konkrete problemet. Sammen beskriver vi dagens metode og hva som tar tid. Deretter bygger vi en enkel første versjon som beviser effekt – før vi skalerer.
-            </p>
-            <p>
-              Asker er hjemmebane. Vi tror lokal forankring gir bedre samarbeid og raskere læring. Målet er å gjøre AI til en trygg del av driften, ikke et «prosjekt på siden».
-            </p>
-            <p>
-              Vi har ingen tunge titler – bare sterk vilje til å levere. Nettopp derfor legger vi kvalitet i selve leveransen: tydelig kommunikasjon, rene løsninger og målbare resultater.
-            </p>
+      <!-- Social Proof Banner -->
+      <section class="section social-proof" aria-label="Kundereferanse" data-observe>
+        <div class="container">
+          <div class="social-proof__banner">
+            <div class="social-proof__badge">
+              <img src="/assets/logos/asker-fotball.png" alt="Asker Fotball" width="40" height="40" class="badge__logo" />
+              <div class="badge__text">
+                <span class="badge__title">Askerfotball.no bruker vår chatbot</span>
+                <span class="badge__subtitle">Se resultatet selv</span>
+              </div>
+            </div>
+            <div class="social-proof__metrics">
+              <div class="metric" data-metric-animate>
+                <span class="metric__number" data-counter="247">0</span>
+                <span class="metric__label">spørsmål besvart i dag</span>
+              </div>
+              <div class="metric" data-metric-animate>
+                <span class="metric__number" data-counter="1.2">0</span>
+                <span class="metric__label">sekunder snitt responstid</span>
+              </div>
+              <div class="metric" data-metric-animate>
+                <span class="metric__number" data-counter="94">0</span>
+                <span class="metric__label">% kundetilfredshet</span>
+              </div>
+            </div>
+            <div class="social-proof__ticker">
+              <div class="ticker__content" data-ticker>
+                <span class="ticker__item">"Chatboten svarte på alle spørsmålene mine umiddelbart!"</span>
+                <span class="ticker__item">"Endelig slipper jeg å vente på svar på e-post"</span>
+                <span class="ticker__item">"Perfekt for foreldre som har spørsmål sent på kvelden"</span>
+                <span class="ticker__item">"Så enkelt å booke baner nå!"</span>
+              </div>
+            </div>
           </div>
-          <figure class="work__portrait glass">
-            <img src="/assets/portraits/owner-placeholder.svg" alt="Portrett av eier, Nikolai Brokhaug Gabrielsen" width="720" height="900" loading="lazy" decoding="async" />
-          </figure>
         </div>
       </section>
+
+      <!-- Section Divider -->
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- ROI Calculator -->
+      <section id="calculator" class="section calculator" aria-labelledby="calculator-title" data-observe>
+        <div class="container">
+          <h2 id="calculator-title" class="section__title">Regn ut hvor mye tid du sparer</h2>
+          <p class="section__intro">Se hvor mye du kan spare på kundeservice med vår RAG-chatbot</p>
+          
+          <div class="calculator__container">
+            <div class="calculator__inputs">
+              <div class="input-group">
+                <label for="emails-per-day">E-poster/inquiries per dag</label>
+                <input type="number" id="emails-per-day" value="20" min="1" max="1000" />
+                <span class="input-help">Antall kundeserviceforespørsler du får daglig</span>
+              </div>
+              
+              <div class="input-group">
+                <label for="time-per-email">Minutter per svar</label>
+                <input type="number" id="time-per-email" value="15" min="1" max="120" />
+                <span class="input-help">Hvor lang tid bruker du på å svare en e-post</span>
+              </div>
+              
+              <div class="input-group">
+                <label for="hourly-rate">Timepris (kr)</label>
+                <input type="number" id="hourly-rate" value="800" min="100" max="5000" />
+                <span class="input-help">Din eller ansattes timepris</span>
+              </div>
+              
+              <div class="input-group">
+                <label for="work-days">Arbeidsdager per måned</label>
+                <input type="number" id="work-days" value="22" min="1" max="31" />
+                <span class="input-help">Antall arbeidsdager per måned</span>
+              </div>
+            </div>
+            
+            <div class="calculator__results">
+              <div class="results__header">
+                <h3>Dine besparelser</h3>
+                <p>Med vår RAG-chatbot</p>
+              </div>
+              
+              <div class="results__metrics">
+                <div class="result-metric">
+                  <span class="result-metric__number" data-calc-result="hours-saved">0</span>
+                  <span class="result-metric__label">timer spart per måned</span>
+                </div>
+                
+                <div class="result-metric">
+                  <span class="result-metric__number" data-calc-result="cost-saved">0</span>
+                  <span class="result-metric__label">kr spart per måned</span>
+                </div>
+                
+                <div class="result-metric">
+                  <span class="result-metric__number" data-calc-result="roi-months">0</span>
+                  <span class="result-metric__label">måneder til break-even</span>
+                </div>
+              </div>
+              
+              <div class="results__visualization">
+                <div class="visualization__chart">
+                  <div class="chart__bar chart__bar--before" data-chart-value="100">
+                    <span class="chart__label">Før: 100% manuelt</span>
+                  </div>
+                  <div class="chart__bar chart__bar--after" data-chart-value="20">
+                    <span class="chart__label">Etter: 20% manuelt</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="results__cta">
+                <a href="#kontakt" class="btn btn--primary btn--glow" data-scroll>Få dette for din bedrift</a>
+                <p class="results__disclaimer">* Basert på 80% reduksjon i manuelle svar</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Divider -->
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- Case Study: Asker Fotball -->
+      <section id="case-study" class="section case-study" aria-labelledby="case-study-title" data-observe>
+        <div class="container">
+          <div class="case-study__header">
+            <h2 id="case-study-title" class="section__title">Slik løste vi Asker Fotballs kundeservice</h2>
+            <p class="section__intro">En detaljert gjennomgang av hvordan vi implementerte RAG-chatbot for Asker Fotball</p>
+          </div>
+
+          <div class="case-study__content">
+            <div class="case-study__before-after">
+              <div class="before-after__container">
+                <div class="before-after__tab" data-tab="before">Før chatbot</div>
+                <div class="before-after__tab active" data-tab="after">Etter chatbot</div>
+              </div>
+              
+              <div class="before-after__content">
+                <div class="before-after__panel" data-panel="before">
+                  <div class="scenario">
+                    <h3>Dagens kundeservice</h3>
+                    <div class="scenario__steps">
+                      <div class="step">
+                        <span class="step__number">1</span>
+                        <span class="step__text">Foreldre sender e-post med spørsmål</span>
+                      </div>
+                      <div class="step">
+                        <span class="step__number">2</span>
+                        <span class="step__text">Rolf sjekker e-post på kvelden</span>
+                      </div>
+                      <div class="step">
+                        <span class="step__number">3</span>
+                        <span class="step__text">Svar sendes neste arbeidsdag</span>
+                      </div>
+                      <div class="step">
+                        <span class="step__number">4</span>
+                        <span class="step__text">Oppfølging og ekstra spørsmål</span>
+                      </div>
+                    </div>
+                    <div class="scenario__stats">
+                      <div class="stat">
+                        <span class="stat__number">24</span>
+                        <span class="stat__label">timer responstid</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat__number">45</span>
+                        <span class="stat__label">minutter per dag</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat__number">3</span>
+                        <span class="stat__label">e-poster per spørsmål</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="before-after__panel active" data-panel="after">
+                  <div class="scenario">
+                    <h3>Med RAG-chatbot</h3>
+                    <div class="scenario__steps">
+                      <div class="step">
+                        <span class="step__number">1</span>
+                        <span class="step__text">Foreldre stiller spørsmål i chat</span>
+                      </div>
+                      <div class="step">
+                        <span class="step__number">2</span>
+                        <span class="step__text">Chatbot svarer øyeblikkelig</span>
+                      </div>
+                      <div class="step">
+                        <span class="step__number">3</span>
+                        <span class="step__text">Alle oppfølginger håndteres automatisk</span>
+                      </div>
+                      <div class="step">
+                        <span class="step__number">4</span>
+                        <span class="step__text">Rolf får kun komplekse saker</span>
+                      </div>
+                    </div>
+                    <div class="scenario__stats">
+                      <div class="stat">
+                        <span class="stat__number">1.2</span>
+                        <span class="stat__label">sekunder responstid</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat__number">5</span>
+                        <span class="stat__label">minutter per dag</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat__number">1</span>
+                        <span class="stat__label">interaksjon per spørsmål</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-study__metrics">
+              <div class="metrics__header">
+                <h3>Resultater etter 3 måneder</h3>
+                <p>Målbare forbedringer med RAG-chatbot</p>
+              </div>
+              
+              <div class="metrics__grid">
+                <div class="metric-card">
+                  <div class="metric-card__icon">📧</div>
+                  <div class="metric-card__content">
+                    <span class="metric-card__number" data-counter="87">0</span>
+                    <span class="metric-card__label">% færre e-poster</span>
+                  </div>
+                </div>
+                
+                <div class="metric-card">
+                  <div class="metric-card__icon">⚡</div>
+                  <div class="metric-card__content">
+                    <span class="metric-card__number" data-counter="1200">0</span>
+                    <span class="metric-card__label">% raskere svar</span>
+                  </div>
+                </div>
+                
+                <div class="metric-card">
+                  <div class="metric-card__icon">😊</div>
+                  <div class="metric-card__content">
+                    <span class="metric-card__number" data-counter="94">0</span>
+                    <span class="metric-card__label">% kundetilfredshet</span>
+                  </div>
+                </div>
+                
+                <div class="metric-card">
+                  <div class="metric-card__icon">⏰</div>
+                  <div class="metric-card__content">
+                    <span class="metric-card__number" data-counter="40">0</span>
+                    <span class="metric-card__label">timer spart per måned</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-study__testimonial">
+              <blockquote class="testimonial__quote">
+                <p>"Chatbotten har revolusjonert hvordan vi håndterer kundeservice. Foreldre får svar øyeblikkelig, og vi bruker tid på det som faktisk krever menneskelig oppmerksomhet. Det er som å ha en ekstra ansatt som aldri sover."</p>
+              </blockquote>
+              <div class="testimonial__author">
+                <img src="/assets/portraits/rolf.png" alt="Rolf Magne Walstad" class="testimonial__avatar" width="60" height="60" />
+                <div class="testimonial__info">
+                  <cite class="testimonial__name">Rolf Magne Walstad</cite>
+                  <span class="testimonial__title">Daglig leder, Asker Fotball</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="case-study__cta">
+              <a href="#kontakt" class="btn btn--primary btn--glow" data-scroll>Vi vil ha det samme</a>
+              <p class="case-study__disclaimer">Start din chatbot-implementasjon på 1-2 uker</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Divider -->
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- Pricing & Packages -->
+      <section id="pricing" class="section pricing" aria-labelledby="pricing-title" data-observe>
+        <div class="container">
+          <h2 id="pricing-title" class="section__title">Velg din klubb-assistent</h2>
+          <p class="section__intro">Enkle pakker. Tydelig verdi. Start med pilot – se resultatene før du bestemmer deg.</p>
+
+          <div class="pricing__grid">
+            <!-- Pilot Package -->
+            <article class="pricing-card">
+              <div class="pricing-card__header">
+                <h3 class="pricing-card__title">PILOT</h3>
+                <div class="pricing-card__price">
+                  <span class="price__amount">0</span>
+                  <span class="price__currency">kr</span>
+                </div>
+                <p class="pricing-card__period">14 dager gratis</p>
+              </div>
+              
+              <ul class="pricing-card__features">
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Widget med kildevisning</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Dekker 10–15 FAQ</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Grunnleggende logging</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Manuell oppdatering 1×</span>
+                </li>
+              </ul>
+              
+              <a href="#kontakt" class="pricing-card__cta btn btn--outline" data-scroll aria-label="Start gratis pilot nå">Start gratis pilot</a>
+              <p class="pricing-card__disclaimer">Ingen binding • 1 domene</p>
+            </article>
+
+            <!-- Standard Package -->
+            <article class="pricing-card pricing-card--popular">
+              <div class="pricing-card__badge">Mest populær</div>
+              <div class="pricing-card__header">
+                <h3 class="pricing-card__title">STANDARD</h3>
+                <div class="pricing-card__price">
+                  <span class="price__amount">1 000</span>
+                  <span class="price__currency">kr/mnd</span>
+                </div>
+              </div>
+              
+              <ul class="pricing-card__features">
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Ukentlig re-crawl</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Eval-test før endring</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Snarveier for topp-FAQ</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Månedsrapport (bruk/KPI)</span>
+                </li>
+              </ul>
+              
+              <a href="#kontakt?plan=standard" class="pricing-card__cta btn btn--primary btn--glow" data-scroll aria-label="Start Standard plan nå">Start Standard</a>
+              <p class="pricing-card__disclaimer">E-postsupport 24 t • Inntil 3 000 spørsmål/mnd</p>
+            </article>
+
+            <!-- Hyre Gabrielsen AI Package -->
+            <article class="pricing-card">
+              <div class="pricing-card__header">
+                <h3 class="pricing-card__title">HYRE GABRIELSEN AI</h3>
+                <div class="pricing-card__price">
+                  <span class="price__amount">Fra 1 500</span>
+                  <span class="price__currency">kr/mnd</span>
+                </div>
+                <p class="pricing-card__period">(eller Prosjektpris)</p>
+              </div>
+              
+              <ul class="pricing-card__features">
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Messenger/lead-skjema</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Enkle integrasjoner (webhook/mail)</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Ukerapport og forslag</span>
+                </li>
+                <li class="feature-item">
+                  <span class="feature-item__icon">✅</span>
+                  <span class="feature-item__text">Lokal oppfølging i Asker</span>
+                </li>
+              </ul>
+              
+              <a href="mailto:nikolai@gabrielsen.ai?subject=Hyre%20Gabrielsen%20AI" class="pricing-card__cta btn btn--outline" aria-label="Snakk med Nikolai om Hyre Gabrielsen AI">Snakk med Nikolai</a>
+              <p class="pricing-card__disclaimer">Skreddersøm • Uforpliktende prat</p>
+            </article>
+          </div>
+
+          <div class="pricing__faq">
+            <div class="faq__grid">
+              <div class="faq__item">
+                <h4 class="faq__question">Må vi endre nettsiden?</h4>
+                <p class="faq__answer">Nei, vi henter info fra eksisterende sider.</p>
+              </div>
+              
+              <div class="faq__item">
+                <h4 class="faq__question">Hva om boten ikke vet svaret?</h4>
+                <p class="faq__answer">Den viser "ukjent" og kontaktinfo.</p>
+              </div>
+              
+              <div class="faq__item">
+                <h4 class="faq__question">Hva skjer etter piloten?</h4>
+                <p class="faq__answer">Du får mini-rapport og forslag til plan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Divider -->
+      <div class="section-divider" aria-hidden="true"></div>
 
       <!-- Anmeldelser -->
       <section id="anmeldelser" class="section reviews" aria-labelledby="reviews-title" data-observe>
         <div class="container">
-          <h2 id="reviews-title" class="section__title">Anmeldelser</h2>
-          <div class="carousel" data-carousel>
-            <div class="carousel__track" data-carousel-track>
-              <article class="review card">
-                <div class="review__logo">
-                  <img src="/assets/logos/asker-fotball.svg" alt="Asker Fotball" width="120" height="36" loading="lazy" decoding="async" />
+          <div class="reviews__header">
+            <h2 id="reviews-title" class="section__title">Hva sier våre kunder?</h2>
+            <p class="section__intro">Se hvordan vår AI-teknologi har forandret kundeservice for bedrifter i Asker</p>
+          </div>
+          
+          <div class="reviews__grid">
+            <article class="review-card" data-review-animate>
+              <div class="review-card__header">
+                <div class="review-card__logo">
+                  <img src="/assets/logos/asker-fotball.png" alt="Asker Fotball" width="140" height="42" loading="lazy" decoding="async" />
                 </div>
-                <blockquote>
-                  «Vi fikk en enkel chatbot på plass som tok unna spørsmål fra foreldre og spillere. Bedre informasjonsflyt og færre e‑poster på kveldene.»
-                </blockquote>
-                <p class="review__author">Rolf Magne Walstad, Asker Fotball</p>
-              </article>
+                <div class="review-card__rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="review-card__quote">
+                <p>«Vi fikk en enkel chatbot på plass som tok unna spørsmål fra foreldre og spillere. Bedre informasjonsflyt og færre e‑poster på kveldene.»</p>
+              </blockquote>
+              <div class="review-card__author">
+                <div class="author__avatar">
+                  <img src="/assets/portraits/rolf.png" alt="Rolf Magne Walstad" width="48" height="48" loading="lazy" decoding="async" />
+                </div>
+                <div class="author__info">
+                  <cite class="author__name">Rolf Magne Walstad</cite>
+                  <span class="author__title">Daglig leder, Asker Fotball</span>
+                </div>
+              </div>
+              <div class="review-card__stats">
+                <div class="stat">
+                  <span class="stat__number">87%</span>
+                  <span class="stat__label">færre e-poster</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__number">1.2s</span>
+                  <span class="stat__label">responstid</span>
+                </div>
+              </div>
+            </article>
 
-              <article class="review card">
-                <div class="review__logo">
-                  <img src="/assets/logos/asker-tennis.svg" alt="Asker Tennis" width="120" height="36" loading="lazy" decoding="async" />
+            <article class="review-card" data-review-animate>
+              <div class="review-card__header">
+                <div class="review-card__logo">
+                  <img src="/assets/logos/tennis.png" alt="Asker Tennis" width="140" height="42" loading="lazy" decoding="async" />
                 </div>
-                <blockquote>
-                  «Automatisert rapportering gjorde at vi raskt så kapasitetsutfordringer. Tydelige grafer og forklarende tekst – lett å ta handling.»
-                </blockquote>
-                <p class="review__author">Oskar Johan Hov, Asker Tennis</p>
-              </article>
+                <div class="review-card__rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="review-card__quote">
+                <p>«Automatisert rapportering gjorde at vi raskt så kapasitetsutfordringer. Tydelige grafer og forklarende tekst – lett å ta handling.»</p>
+              </blockquote>
+              <div class="review-card__author">
+                <div class="author__avatar">
+                  <div class="avatar__placeholder">OJ</div>
+                </div>
+                <div class="author__info">
+                  <cite class="author__name">Oskar Johan Hov</cite>
+                  <span class="author__title">Daglig leder, Asker Tennis</span>
+                </div>
+              </div>
+              <div class="review-card__stats">
+                <div class="stat">
+                  <span class="stat__number">40h</span>
+                  <span class="stat__label">spart per måned</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__number">95%</span>
+                  <span class="stat__label">nøyaktighet</span>
+                </div>
+              </div>
+            </article>
 
-              <article class="review card">
-                <div class="review__logo">
-                  <img src="/assets/logos/gerts-cashmere.svg" alt="Gerts Cashmere" width="120" height="36" loading="lazy" decoding="async" />
+            <article class="review-card" data-review-animate>
+              <div class="review-card__header">
+                <div class="review-card__logo">
+                  <img src="/assets/logos/gerts.png" alt="Gerts Cashmere" width="140" height="42" loading="lazy" decoding="async" />
                 </div>
-                <blockquote>
-                  «E‑postassistenten ga oss konsistente svar i vår stemme, kortere responstid og mindre manuelt arbeid på kundeservice.»
-                </blockquote>
-                <p class="review__author">Ferdinand Mohn Pettersen, Gerts Cashmere</p>
-              </article>
-            </div>
-            <div class="carousel__controls">
-              <button class="carousel__btn" data-carousel-prev aria-label="Forrige">‹</button>
-              <button class="carousel__btn" data-carousel-next aria-label="Neste">›</button>
-            </div>
+                <div class="review-card__rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+              <blockquote class="review-card__quote">
+                <p>«E‑postassistenten ga oss konsistente svar i vår stemme, kortere responstid og mindre manuelt arbeid på kundeservice.»</p>
+              </blockquote>
+              <div class="review-card__author">
+                <div class="author__avatar">
+                  <div class="avatar__placeholder">FM</div>
+                </div>
+                <div class="author__info">
+                  <cite class="author__name">Ferdinand Mohn Pettersen</cite>
+                  <span class="author__title">Eier, Gerts Cashmere</span>
+                </div>
+              </div>
+              <div class="review-card__stats">
+                <div class="stat">
+                  <span class="stat__number">60%</span>
+                  <span class="stat__label">raskere svar</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__number">24/7</span>
+                  <span class="stat__label">tilgjengelighet</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="reviews__cta">
+            <p class="reviews__text">Bli den neste som opplever forbedret kundeservice</p>
+            <a href="#kontakt" class="btn btn--primary btn--glow" data-scroll>Start i dag</a>
           </div>
         </div>
       </section>
 
-      <!-- Kontakt -->
+      <!-- Enhanced Contact Section -->
       <section id="kontakt" class="section contact" aria-labelledby="kontakt-title" data-observe>
-        <div class="container contact__grid">
-          <div class="contact__info">
-            <h2 id="kontakt-title" class="section__title">Kontakt</h2>
-            <ul class="contact__list">
-              <li><strong>E‑post:</strong> <a href="mailto:nikolaibrokhaug@gmail.com">nikolaibrokhaug@gmail.com</a></li>
-              <li><strong>Telefon:</strong> <a href="tel:+4794172428">94172428</a></li>
-              <li><strong>Adresse:</strong> Fjelkensvingen 18, 1395 Hvalstad</li>
-            </ul>
-            <div class="contact__cta">
-              <a class="btn btn--primary btn--glow" href="mailto:nikolaibrokhaug@gmail.com">Send e‑post</a>
-              <a class="btn btn--ghost" href="tel:+4794172428">Ring oss</a>
-            </div>
+        <div class="container">
+          <div class="contact__header">
+            <h2 id="kontakt-title" class="section__title">Få din chatbot på 1-2 uker</h2>
+            <p class="section__intro">Ledige plasser denne måneden: <span class="urgency-counter">3</span></p>
           </div>
 
-          <form class="form" novalidate data-validate>
-            <div class="form__row">
-              <label for="navn">Navn</label>
-              <input id="navn" name="navn" type="text" autocomplete="name" required />
-              <p class="form__error" aria-live="polite"></p>
+          <div class="contact__grid">
+            <div class="contact__info">
+              <div class="contact__urgency">
+                <div class="urgency-badge">
+                  <span class="urgency-badge__icon">⚡</span>
+                  <span class="urgency-badge__text">Rask implementasjon</span>
+                </div>
+                <p class="urgency-text">Vi starter prosjektet ditt innen 48 timer etter kontrakt. Leveranse på 1-2 uker.</p>
+              </div>
+
+              <div class="contact__options">
+                <div class="contact-option">
+                  <h3>📞 Ring oss nå</h3>
+                  <p>Få svar på alle spørsmål direkte</p>
+                  <a class="btn btn--primary btn--glow" href="tel:+4794172428">Ring 94172428</a>
+                </div>
+
+                <div class="contact-option">
+                  <h3>💬 Snakk med vår chatbot</h3>
+                  <p>Test vår teknologi live</p>
+                  <button class="btn btn--outline" data-modal-trigger="live-chat">Start chat</button>
+                </div>
+
+                <div class="contact-option">
+                  <h3>📅 Book møte</h3>
+                  <p>30 min gratis konsultasjon</p>
+                  <button class="btn btn--outline" data-modal-trigger="booking">Velg tid</button>
+                </div>
+              </div>
+
+              <div class="contact__details">
+                <h3>Kontaktinformasjon</h3>
+                <ul class="contact__list">
+                  <li><strong>E‑post:</strong> <a href="mailto:nikolaibrokhaug@gmail.com">nikolaibrokhaug@gmail.com</a></li>
+                  <li><strong>Telefon:</strong> <a href="tel:+4794172428">94172428</a></li>
+                  <li><strong>Adresse:</strong> Fjelkensvingen 18, 1395 Hvalstad</li>
+                  <li><strong>Åpningstider:</strong> Man-fre 08:00-17:00</li>
+                </ul>
+              </div>
             </div>
-            <div class="form__row">
-              <label for="epost">E‑post</label>
-              <input id="epost" name="epost" type="email" autocomplete="email" required />
-              <p class="form__error" aria-live="polite"></p>
+
+            <div class="contact__form-container">
+              <div class="form-header">
+                <h3>Få tilbud på din chatbot</h3>
+                <p>Fortell oss om dine behov, så sender vi et skreddersydd tilbud</p>
+              </div>
+
+              <form class="form enhanced-form" novalidate data-validate>
+                <div class="form__row">
+                  <label for="navn">Navn *</label>
+                  <input id="navn" name="navn" type="text" autocomplete="name" required placeholder="Ditt fulle navn" />
+                  <p class="form__error" aria-live="polite"></p>
+                </div>
+                
+                <div class="form__row">
+                  <label for="epost">E‑post *</label>
+                  <input id="epost" name="epost" type="email" autocomplete="email" required placeholder="din@epost.no" />
+                  <p class="form__error" aria-live="polite"></p>
+                </div>
+                
+                <div class="form__row">
+                  <label for="firma">Firma</label>
+                  <input id="firma" name="firma" type="text" autocomplete="organization" placeholder="Ditt firma" />
+                  <p class="form__error" aria-live="polite"></p>
+                </div>
+                
+                <div class="form__row">
+                  <label for="telefon">Telefon</label>
+                  <input id="telefon" name="telefon" type="tel" autocomplete="tel" placeholder="Din telefon" />
+                  <p class="form__error" aria-live="polite"></p>
+                </div>
+
+                <div class="form__row">
+                  <label for="behov">Hva trenger du hjelp med?</label>
+                  <select id="behov" name="behov">
+                    <option value="">Velg alternativ</option>
+                    <option value="kundeservice">Automatisere kundeservice</option>
+                    <option value="e-post">E-postassistent</option>
+                    <option value="dokumenter">Dokumentoppsummering</option>
+                    <option value="rapporter">Automatisert rapportering</option>
+                    <option value="annet">Annet</option>
+                  </select>
+                </div>
+                
+                <div class="form__row">
+                  <label for="melding">Beskriv ditt prosjekt *</label>
+                  <textarea id="melding" name="melding" rows="4" required placeholder="Fortell oss om dine behov, nåværende prosesser og hva du håper å oppnå..."></textarea>
+                  <p class="form__error" aria-live="polite"></p>
+                </div>
+
+                <div class="form__row">
+                  <label class="checkbox-label">
+                    <input type="checkbox" required>
+                    <span class="checkbox-text">Jeg godtar at mine opplysninger brukes til å kontakte meg om dette prosjektet</span>
+                  </label>
+                </div>
+                
+                <button class="btn btn--primary btn--glow form__submit" type="submit">
+                  <span class="btn-text">Send forespørsel</span>
+                  <span class="btn-loading" style="display: none;">Sender...</span>
+                </button>
+                <p class="form__status" role="status" aria-live="polite"></p>
+              </form>
             </div>
-            <div class="form__row">
-              <label for="firma">Firma</label>
-              <input id="firma" name="firma" type="text" autocomplete="organization" />
-              <p class="form__error" aria-live="polite"></p>
-            </div>
-            <div class="form__row">
-              <label for="melding">Melding</label>
-              <textarea id="melding" name="melding" rows="4" required></textarea>
-              <p class="form__error" aria-live="polite"></p>
-            </div>
-            <button class="btn btn--primary btn--glow" type="submit">Send</button>
-            <p class="form__status" role="status" aria-live="polite"></p>
-          </form>
+          </div>
         </div>
       </section>
     </main>
