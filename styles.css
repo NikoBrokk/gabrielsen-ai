@@ -342,7 +342,7 @@ img { max-width: 100%; display: block; }
 .case-study__header { text-align: center; margin-bottom: 48px; }
 .case-study__content { display: grid; gap: 48px; }
 
-/* Advanced Transformation Showcase */
+/* Modern Transformation Showcase */
 .transformation-showcase {
   background: linear-gradient(135deg, 
     color-mix(in oklab, var(--surface) 100%, transparent), 
@@ -393,17 +393,31 @@ img { max-width: 100%; display: block; }
   margin: 0 auto;
 }
 
-.transformation__slider {
+/* Modern Transformation Layout */
+.modern-transformation {
   position: relative;
   margin-bottom: 48px;
 }
 
-.transformation__track {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  min-height: 500px;
+.modern-transformation .transformation__state {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.modern-transformation .transformation__state.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.modern-transformation .transformation__state.transitioning {
+  transform: translateY(-20px) scale(1.02);
 }
 
 .transformation__state {
@@ -656,79 +670,161 @@ img { max-width: 100%; display: block; }
   margin-top: 4px;
 }
 
-/* Interactive Slider */
-.transformation__controls {
-  margin-top: 32px;
-}
-
-.slider__track {
-  position: relative;
-  height: 60px;
-  background: color-mix(in oklab, var(--surface-2) 50%, transparent);
-  border-radius: 30px;
-  cursor: pointer;
-  border: 2px solid color-mix(in oklab, var(--primary) 20%, transparent);
-  transition: all 0.3s ease;
-}
-
-.slider__track:hover {
-  border-color: color-mix(in oklab, var(--primary) 40%, transparent);
-  box-shadow: 0 4px 16px rgba(125,95,255,0.2);
-}
-
-.slider__thumb {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  border-radius: 50%;
-  cursor: grab;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 16px rgba(125,95,255,0.3);
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.slider__thumb:hover {
-  transform: translate(-50%, -50%) scale(1.1);
-  box-shadow: 0 6px 20px rgba(125,95,255,0.4);
-}
-
-.slider__thumb:active {
-  cursor: grabbing;
-  transform: translate(-50%, -50%) scale(0.95);
-}
-
-.thumb__icon {
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.slider__labels {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
+/* Modern Controls */
+.modern-controls {
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
-  pointer-events: none;
+  align-items: center;
+  margin-top: 32px;
+  padding: 20px;
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--surface) 90%, transparent), 
+    color-mix(in oklab, var(--surface-2) 80%, transparent)
+  );
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--primary) 20%, transparent);
+  backdrop-filter: blur(10px);
 }
 
-.label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  padding: 4px 12px;
+.control-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 2px solid color-mix(in oklab, var(--surface-2) 50%, transparent);
   border-radius: 12px;
-  background: color-mix(in oklab, var(--surface) 80%, transparent);
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.control-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--primary) 10%, transparent), 
+    color-mix(in oklab, var(--accent) 8%, transparent)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.control-btn:hover {
+  border-color: color-mix(in oklab, var(--primary) 40%, transparent);
+  color: var(--text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(125,95,255,0.2);
+}
+
+.control-btn:hover::before {
+  opacity: 1;
+}
+
+.control-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 4px 16px rgba(125,95,255,0.3);
+  transform: translateY(-2px);
+}
+
+.control-btn.active::before {
+  opacity: 0;
+}
+
+.btn-icon {
+  font-size: 16px;
+  z-index: 1;
+  position: relative;
+}
+
+.btn-text {
+  z-index: 1;
+  position: relative;
+}
+
+.auto-play-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--primary) 15%, transparent), 
+    color-mix(in oklab, var(--accent) 12%, transparent)
+  );
+  border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+  border-radius: 10px;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--primary) 20%, transparent), 
+    color-mix(in oklab, var(--accent) 18%, transparent)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toggle-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(125,95,255,0.2);
+  border-color: color-mix(in oklab, var(--primary) 50%, transparent);
+}
+
+.toggle-btn:hover::before {
+  opacity: 1;
+}
+
+.toggle-btn.playing {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #22c55e;
+  color: white;
+}
+
+.toggle-btn.playing .toggle-icon {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.toggle-icon {
+  font-size: 14px;
+  z-index: 1;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.toggle-btn.playing .toggle-icon {
+  transform: scale(1.1);
+}
+
+.toggle-text {
+  z-index: 1;
+  position: relative;
 }
 
 /* Progress Indicator */
@@ -959,13 +1055,9 @@ img { max-width: 100%; display: block; }
     border-radius: 16px;
   }
   
-  .transformation__track {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  
   .transformation__state {
     padding: 24px;
+    position: relative;
   }
   
   .workflow {
@@ -1018,20 +1110,39 @@ img { max-width: 100%; display: block; }
     align-items: center;
   }
   
-  .slider__track {
-    height: 50px;
-  }
-  
-  .slider__thumb {
-    width: 40px;
-    height: 40px;
-  }
-  
   .transformation__header h3 {
     font-size: 24px;
   }
   
   .transformation__header p {
+    font-size: 14px;
+  }
+  
+  /* Modern Controls Mobile */
+  .modern-controls {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .control-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .control-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 14px 16px;
+  }
+  
+  .auto-play-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .toggle-btn {
+    padding: 12px 20px;
     font-size: 14px;
   }
 }
@@ -1437,53 +1548,432 @@ img { max-width: 100%; display: block; }
 .carousel__btn { background: none; border: 1px solid var(--surface-2); color: var(--text); padding: 8px 12px; border-radius: 12px; cursor: pointer; }
 
 /* Enhanced Contact */
-.contact { background: linear-gradient(135deg, color-mix(in oklab, var(--surface) 98%, transparent), color-mix(in oklab, var(--surface-2) 95%, transparent)); }
-.contact__header { text-align: center; margin-bottom: 48px; }
-.urgency-counter { color: var(--primary); font-weight: 700; animation: pulse 2s ease-in-out infinite, shimmer 2s ease-in-out infinite; }
+.contact { 
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--surface) 98%, transparent), 
+    color-mix(in oklab, var(--surface-2) 95%, transparent)
+  ); 
+  position: relative;
+  overflow: hidden;
+}
 
-.contact__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(125,95,255,0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(168,85,247,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
 
-.contact__urgency { background: linear-gradient(135deg, color-mix(in oklab, var(--primary) 15%, transparent), color-mix(in oklab, var(--accent) 10%, transparent)); border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent); border-radius: var(--radius); padding: 24px; margin-bottom: 32px; }
-.urgency-badge { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.urgency-badge__icon { font-size: 24px; }
-.urgency-badge__text { color: var(--text); font-weight: 700; font-size: 16px; }
-.urgency-text { color: var(--muted); margin: 0; font-size: 14px; }
+.contact__header { 
+  text-align: center; 
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 1;
+}
 
-.contact__options { display: grid; gap: 24px; margin-bottom: 32px; }
-.contact-option { background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 100%, transparent), color-mix(in oklab, var(--surface-2) 80%, transparent)); border: 1px solid color-mix(in oklab, var(--surface-2) 70%, transparent); border-radius: var(--radius); padding: 20px; text-align: center; transition: transform .2s ease, box-shadow .2s ease; }
-.contact-option:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.2); }
-.contact-option h3 { margin: 0 0 8px; font-size: 18px; color: var(--text); }
-.contact-option p { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+.contact__header .section__title {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
 
-.contact__details h3 { margin: 0 0 16px; font-size: 20px; color: var(--text); }
-.contact__list { list-style: none; padding: 0; margin: 0; color: var(--muted); }
-.contact__list li { margin-bottom: 8px; }
+.contact__grid { 
+  display: grid; 
+  grid-template-columns: 2fr 1fr; 
+  gap: 4rem; 
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
 
-.contact__form-container { background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 100%, transparent), color-mix(in oklab, var(--surface-2) 80%, transparent)); border: 1px solid color-mix(in oklab, var(--surface-2) 70%, transparent); border-radius: var(--radius); padding: 32px; }
-.form-header { text-align: center; margin-bottom: 32px; }
-.form-header h3 { margin: 0 0 8px; font-size: 24px; color: var(--text); }
-.form-header p { margin: 0; color: var(--muted); font-size: 14px; }
+/* Contact Form */
+.contact__form-container { 
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--surface) 100%, transparent), 
+    color-mix(in oklab, var(--surface-2) 90%, transparent)
+  ); 
+  border: 1px solid color-mix(in oklab, var(--primary) 20%, transparent); 
+  border-radius: 24px; 
+  padding: 3rem; 
+  box-shadow: 0 20px 60px rgba(125,95,255,0.1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-.enhanced-form .form__row { display: grid; gap: 8px; margin-bottom: 20px; }
-.enhanced-form label { font-size: 14px; color: var(--text); font-weight: 600; }
-.enhanced-form input, .enhanced-form textarea, .enhanced-form select { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--surface-2) 70%, transparent); background: color-mix(in oklab, var(--surface) 100%, transparent); color: var(--text); outline: none; transition: all .2s ease; }
-.enhanced-form input:focus, .enhanced-form textarea:focus, .enhanced-form select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 20%, transparent); }
-.enhanced-form input::placeholder, .enhanced-form textarea::placeholder { color: var(--muted); }
+.contact__form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #5fe1ff, #7d5fff, #33c7ff);
+  border-radius: 24px 24px 0 0;
+}
 
-.checkbox-label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
-.checkbox-label input[type="checkbox"] { width: auto; margin: 0; }
-.checkbox-text { color: var(--muted); font-size: 14px; line-height: 1.4; }
+.contact__form-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 80px rgba(125,95,255,0.15);
+}
 
-.form__submit { width: 100%; position: relative; }
-.btn-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.form-header { 
+  text-align: center; 
+  margin-bottom: 2.5rem; 
+}
 
-.form__error { min-height: 18px; color: var(--danger); font-size: 12px; margin: 0; }
-.form__status { color: var(--ok); font-size: 14px; margin-top: 16px; text-align: center; }
+.form-header h3 { 
+  margin: 0 0 1rem; 
+  font-size: 2rem; 
+  color: var(--text);
+  font-weight: 700;
+}
 
-@media (max-width: 900px) {
-  .contact__grid { grid-template-columns: 1fr; gap: 32px; }
-  .contact__options { grid-template-columns: 1fr; gap: 16px; }
-  .contact__form-container { padding: 24px; }
+.form-header p { 
+  margin: 0; 
+  color: var(--muted); 
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.enhanced-form .form__row { 
+  display: grid; 
+  gap: 0.75rem; 
+  margin-bottom: 1.5rem; 
+}
+
+.enhanced-form label { 
+  font-size: 0.95rem; 
+  color: var(--text); 
+  font-weight: 600;
+  display: block;
+}
+
+.enhanced-form input, 
+.enhanced-form textarea { 
+  width: 100%; 
+  padding: 1rem 1.25rem; 
+  border-radius: 16px; 
+  border: 2px solid color-mix(in oklab, var(--surface-2) 50%, transparent); 
+  background: color-mix(in oklab, var(--surface) 100%, transparent); 
+  color: var(--text); 
+  outline: none; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.enhanced-form input:focus, 
+.enhanced-form textarea:focus { 
+  border-color: var(--primary); 
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 20%, transparent);
+  transform: translateY(-2px);
+}
+
+.enhanced-form input::placeholder, 
+.enhanced-form textarea::placeholder { 
+  color: var(--muted); 
+  font-style: italic;
+}
+
+.checkbox-group {
+  display: grid;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox-label { 
+  display: flex; 
+  align-items: center; 
+  gap: 1rem; 
+  cursor: pointer; 
+  padding: 1rem;
+  background: color-mix(in oklab, var(--surface-2) 20%, transparent);
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.checkbox-label:hover {
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  transform: translateX(4px);
+}
+
+.checkbox-label input[type="checkbox"] { 
+  width: 20px; 
+  height: 20px;
+  margin: 0; 
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-text {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.checkbox-text { 
+  color: var(--text); 
+  font-size: 0.95rem; 
+  line-height: 1.4;
+  flex: 1;
+}
+
+.form__submit { 
+  width: 100%; 
+  position: relative; 
+  margin-top: 2rem;
+}
+
+.btn-loading { 
+  position: absolute; 
+  inset: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--primary);
+  border-radius: inherit;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.form__error { 
+  min-height: 1.5rem; 
+  color: var(--danger); 
+  font-size: 0.9rem; 
+  margin: 1rem 0 0; 
+  text-align: center;
+  font-weight: 500;
+}
+
+.form__status { 
+  color: var(--ok); 
+  font-size: 1rem; 
+  margin-top: 1rem; 
+  text-align: center;
+  font-weight: 600;
+  padding: 1rem;
+  background: color-mix(in oklab, var(--ok) 10%, transparent);
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--ok) 30%, transparent);
+}
+
+/* Contact Information */
+.contact__info {
+  display: grid;
+  gap: 2rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.contact__urgency { 
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--primary) 15%, transparent), 
+    color-mix(in oklab, var(--accent) 10%, transparent)
+  ); 
+  border: 2px solid color-mix(in oklab, var(--primary) 30%, transparent); 
+  border-radius: 20px; 
+  padding: 2rem; 
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.contact__urgency::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #5fe1ff, #7d5fff, #33c7ff);
+  border-radius: 20px 20px 0 0;
+}
+
+.urgency-badge { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  gap: 0.75rem; 
+  margin-bottom: 1rem; 
+}
+
+.urgency-badge__icon { 
+  font-size: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.urgency-badge__text { 
+  color: var(--text); 
+  font-weight: 700; 
+  font-size: 1.1rem; 
+}
+
+.urgency-text { 
+  color: var(--muted); 
+  margin: 0; 
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.contact__details { 
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--surface) 100%, transparent), 
+    color-mix(in oklab, var(--surface-2) 90%, transparent)
+  );
+  border: 1px solid color-mix(in oklab, var(--surface-2) 50%, transparent);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.contact__details h3 { 
+  margin: 0 0 1.5rem; 
+  font-size: 1.25rem; 
+  color: var(--text);
+  font-weight: 700;
+}
+
+.contact__list { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+  display: grid;
+  gap: 1rem;
+}
+
+.contact__list li { 
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: color-mix(in oklab, var(--surface-2) 20%, transparent);
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact__list li:hover {
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  transform: translateX(4px);
+}
+
+.contact__icon {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+}
+
+.contact__list a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contact__list a:hover {
+  color: var(--primary);
+}
+
+.contact__guarantee {
+  background: linear-gradient(135deg, 
+    color-mix(in oklab, var(--ok) 10%, transparent), 
+    color-mix(in oklab, var(--ok) 5%, transparent)
+  );
+  border: 1px solid color-mix(in oklab, var(--ok) 30%, transparent);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.guarantee__icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.contact__guarantee h4 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.contact__guarantee p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .contact__grid { 
+    grid-template-columns: 1fr; 
+    gap: 3rem; 
+  }
+  
+  .contact__info {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact__form-container { 
+    padding: 2rem; 
+  }
+  
+  .contact__header {
+    margin-bottom: 3rem;
+  }
+  
+  .form-header h3 {
+    font-size: 1.75rem;
+  }
+  
+  .checkbox-group {
+    gap: 0.75rem;
+  }
+  
+  .checkbox-label {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact__form-container { 
+    padding: 1.5rem; 
+    border-radius: 16px;
+  }
+  
+  .contact__urgency,
+  .contact__details,
+  .contact__guarantee {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
 }
 
 /* Footer */

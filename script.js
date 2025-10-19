@@ -6,6 +6,104 @@
   const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 
+  // Contact Form Handler
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const btnText = submitBtn?.querySelector('.btn-text');
+  const btnLoading = submitBtn?.querySelector('.btn-loading');
+  const formError = document.getElementById('formError');
+  const formStatus = document.getElementById('formStatus');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Clear previous messages
+      formError.textContent = '';
+      formStatus.style.display = 'none';
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'flex';
+      
+      try {
+        // Get form data
+        const formData = new FormData(contactForm);
+        const data = {
+          company: formData.get('company'),
+          contactPerson: formData.get('contactPerson'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          services: formData.getAll('services'),
+          message: formData.get('message')
+        };
+        
+        // Validate required fields
+        if (!data.company || !data.contactPerson || !data.email) {
+          throw new Error('Vennligst fyll ut alle påkrevde felt');
+        }
+        
+        if (data.services.length === 0) {
+          throw new Error('Vennligst velg minst ett tilbud');
+        }
+        
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.email)) {
+          throw new Error('Vennligst oppgi en gyldig e-postadresse');
+        }
+        
+        // Send email (using a simple mailto approach for now)
+        const servicesText = data.services.map(service => {
+          switch(service) {
+            case 'pilot': return 'Gratis pilot (1 måned test)';
+            case 'standard': return 'Standard løsning (1 000 kr/mnd)';
+            case 'consulting': return 'AI-konsultering (skreddersydd løsning)';
+            default: return service;
+          }
+        }).join(', ');
+        
+        const emailBody = `
+Ny forespørsel fra ${data.company}
+
+Kontaktperson: ${data.contactPerson}
+E-post: ${data.email}
+Telefon: ${data.phone || 'Ikke oppgitt'}
+
+Ønsket tilbud: ${servicesText}
+
+Beskrivelse:
+${data.message || 'Ingen beskrivelse oppgitt'}
+
+---
+Sendt fra gabrielsen.ai kontakt-skjema
+        `.trim();
+        
+        // Create mailto link
+        const mailtoLink = `mailto:gabrielsenai@gmail.com?subject=Ny forespørsel fra ${encodeURIComponent(data.company)}&body=${encodeURIComponent(emailBody)}`;
+        
+        // Open email client
+        window.location.href = mailtoLink;
+        
+        // Show success message
+        formStatus.textContent = 'Takk for din forespørsel! E-post-programmet ditt åpnes nå.';
+        formStatus.style.display = 'block';
+        
+        // Reset form
+        contactForm.reset();
+        
+      } catch (error) {
+        formError.textContent = error.message;
+      } finally {
+        // Reset button state
+        submitBtn.disabled = false;
+        btnText.style.display = 'block';
+        btnLoading.style.display = 'none';
+      }
+    });
+  }
+
   // Sticky shrinking nav
   const header = document.querySelector('[data-nav]');
   const shrinkOn = 10;
@@ -1081,75 +1179,69 @@
   });
 })();
 
-// Advanced Transformation Showcase Interactive Slider
+// Modern Transformation Showcase
 (function() {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const transformationSlider = document.querySelector('[data-transformation-slider]');
+  const modernTransformation = document.querySelector('[data-modern-transformation]');
   
-  if (transformationSlider && !prefersReduced) {
-    const sliderThumb = transformationSlider.querySelector('[data-slider-thumb]');
-    const sliderTrack = transformationSlider.querySelector('.slider__track');
-    const progressFill = document.querySelector('[data-progress-fill]');
+  if (modernTransformation && !prefersReduced) {
+    const beforeState = modernTransformation.querySelector('[data-state="before"]');
+    const afterState = modernTransformation.querySelector('[data-state="after"]');
+    const beforeBtn = modernTransformation.querySelector('[data-control="before"]');
+    const afterBtn = modernTransformation.querySelector('[data-control="after"]');
+    const autoPlayBtn = modernTransformation.querySelector('[data-auto-play]');
     const progressStats = document.querySelectorAll('[data-stat]');
-    const workflowSteps = transformationSlider.querySelectorAll('[data-step]');
+    const workflowSteps = modernTransformation.querySelectorAll('[data-step]');
     
-    let isDragging = false;
-    let currentPosition = 0.5; // Start in middle (50%)
+    let currentState = 'before';
+    let isAutoPlaying = false;
+    let autoPlayInterval = null;
     
-    // Initialize animation
+    // Initialize transformation
     const initializeTransformation = () => {
-      updateTransformation(currentPosition);
+      // Show before state initially
+      showState('before');
       animateWorkflowSteps();
       animateProgressStats();
+      
+      // Start auto-play after a delay
+      setTimeout(() => {
+        startAutoPlay();
+      }, 3000);
     };
     
-    // Update transformation based on slider position
-    const updateTransformation = (position) => {
-      // Update slider thumb position
-      const thumbPosition = (position - 0.5) * 100;
-      sliderThumb.style.left = `calc(50% + ${thumbPosition}px)`;
+    // Show specific state with smooth transition
+    const showState = (state) => {
+      // Remove active classes
+      beforeState.classList.remove('active', 'transitioning');
+      afterState.classList.remove('active', 'transitioning');
+      beforeBtn.classList.remove('active');
+      afterBtn.classList.remove('active');
       
-      // Update progress bar
-      progressFill.style.width = `${position * 100}%`;
+      // Add transitioning class for smooth animation
+      if (state === 'before') {
+        beforeState.classList.add('transitioning');
+        beforeBtn.classList.add('active');
+        setTimeout(() => {
+          beforeState.classList.remove('transitioning');
+          beforeState.classList.add('active');
+        }, 100);
+      } else {
+        afterState.classList.add('transitioning');
+        afterBtn.classList.add('active');
+        setTimeout(() => {
+          afterState.classList.remove('transitioning');
+          afterState.classList.add('active');
+        }, 100);
+      }
       
-      // Update state visibility and effects
-      const beforeState = transformationSlider.querySelector('.transformation__state--before');
-      const afterState = transformationSlider.querySelector('.transformation__state--after');
-      
-      // Calculate opacity and transform based on position
-      const beforeOpacity = Math.max(0.3, 1 - position);
-      const afterOpacity = Math.max(0.3, position);
-      
-      beforeState.style.opacity = beforeOpacity;
-      afterState.style.opacity = afterOpacity;
-      
-      // Add transform effects
-      const beforeTransform = `translateX(${(1 - position) * -20}px) scale(${0.9 + (1 - position) * 0.1})`;
-      const afterTransform = `translateX(${(1 - position) * 20}px) scale(${0.9 + position * 0.1})`;
-      
-      beforeState.style.transform = beforeTransform;
-      afterState.style.transform = afterTransform;
-      
-      // Update workflow step animations
-      workflowSteps.forEach((step, index) => {
-        const stepNumber = parseInt(step.getAttribute('data-step'));
-        const delay = stepNumber * 200;
-        
-        if (position > 0.3) {
-          setTimeout(() => {
-            step.style.opacity = '1';
-            step.style.transform = 'translateX(0) scale(1)';
-          }, delay);
-        } else {
-          step.style.opacity = '0.6';
-          step.style.transform = 'translateX(-10px) scale(0.95)';
-        }
-      });
+      currentState = state;
     };
     
     // Animate workflow steps
     const animateWorkflowSteps = () => {
-      workflowSteps.forEach((step, index) => {
+      const currentSteps = modernTransformation.querySelectorAll('.active [data-step]');
+      currentSteps.forEach((step, index) => {
         setTimeout(() => {
           step.style.opacity = '0';
           step.style.transform = 'translateX(-20px) scale(0.9)';
@@ -1159,7 +1251,7 @@
             step.style.opacity = '1';
             step.style.transform = 'translateX(0) scale(1)';
           }, 100);
-        }, index * 300);
+        }, index * 200);
       });
     };
     
@@ -1186,103 +1278,58 @@
       });
     };
     
-    // Mouse events for slider
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
+    // Auto-play functionality
+    const startAutoPlay = () => {
+      if (isAutoPlaying) return;
       
-      const rect = sliderTrack.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const percentage = Math.max(0, Math.min(1, x / rect.width));
+      isAutoPlaying = true;
+      autoPlayBtn.classList.add('playing');
+      autoPlayBtn.querySelector('.toggle-text').textContent = 'Stopp';
+      autoPlayBtn.querySelector('.toggle-icon').textContent = '⏸️';
       
-      currentPosition = percentage;
-      updateTransformation(currentPosition);
+      autoPlayInterval = setInterval(() => {
+        const nextState = currentState === 'before' ? 'after' : 'before';
+        showState(nextState);
+        animateWorkflowSteps();
+      }, 4000);
     };
     
-    const handleMouseUp = () => {
-      isDragging = false;
-      sliderThumb.style.cursor = 'grab';
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-    
-    const handleMouseDown = (e) => {
-      e.preventDefault();
-      isDragging = true;
-      sliderThumb.style.cursor = 'grabbing';
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    };
-    
-    // Touch events for mobile
-    const handleTouchMove = (e) => {
-      if (!isDragging) return;
+    const stopAutoPlay = () => {
+      if (!isAutoPlaying) return;
       
-      const rect = sliderTrack.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
-      const percentage = Math.max(0, Math.min(1, x / rect.width));
+      isAutoPlaying = false;
+      autoPlayBtn.classList.remove('playing');
+      autoPlayBtn.querySelector('.toggle-text').textContent = 'Auto-spill';
+      autoPlayBtn.querySelector('.toggle-icon').textContent = '▶️';
       
-      currentPosition = percentage;
-      updateTransformation(currentPosition);
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
     };
     
-    const handleTouchEnd = () => {
-      isDragging = false;
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-    
-    const handleTouchStart = (e) => {
-      e.preventDefault();
-      isDragging = true;
-      document.addEventListener('touchmove', handleTouchMove);
-      document.addEventListener('touchend', handleTouchEnd);
-    };
-    
-    // Add event listeners
-    sliderThumb.addEventListener('mousedown', handleMouseDown);
-    sliderTrack.addEventListener('mousedown', (e) => {
-      const rect = sliderTrack.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      currentPosition = Math.max(0, Math.min(1, x / rect.width));
-      updateTransformation(currentPosition);
+    // Event listeners
+    beforeBtn.addEventListener('click', () => {
+      stopAutoPlay();
+      showState('before');
+      animateWorkflowSteps();
     });
     
-    sliderThumb.addEventListener('touchstart', handleTouchStart);
-    sliderTrack.addEventListener('touchstart', (e) => {
-      const rect = sliderTrack.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
-      currentPosition = Math.max(0, Math.min(1, x / rect.width));
-      updateTransformation(currentPosition);
+    afterBtn.addEventListener('click', () => {
+      stopAutoPlay();
+      showState('after');
+      animateWorkflowSteps();
     });
     
-    // Auto-animation on scroll into view
-    const transformationObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            initializeTransformation();
-            
-            // Auto-animate to show transformation
-            let autoPosition = 0;
-            const autoAnimate = () => {
-              autoPosition += 0.02;
-              if (autoPosition <= 1) {
-                updateTransformation(autoPosition);
-                requestAnimationFrame(autoAnimate);
-              }
-            };
-            
-            setTimeout(autoAnimate, 1000);
-          }, 500);
-          
-          transformationObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
+    autoPlayBtn.addEventListener('click', () => {
+      if (isAutoPlaying) {
+        stopAutoPlay();
+      } else {
+        startAutoPlay();
+      }
+    });
     
-    transformationObserver.observe(transformationSlider);
-    
-    // Add hover effects for workflow steps with neural pulse
+    // Add hover effects for workflow steps
     workflowSteps.forEach(step => {
       const stepIcon = step.querySelector('.step__icon');
       
@@ -1307,115 +1354,67 @@
       });
     });
     
-    // Add data stream effect between workflow steps
-    const addDataStreams = () => {
-      workflowSteps.forEach((step, index) => {
-        if (index < workflowSteps.length - 1) {
-          const nextStep = workflowSteps[index + 1];
-          const stream = document.createElement('div');
-          stream.className = 'data-stream-between';
-          stream.style.cssText = `
-            position: absolute;
-            top: 50%;
-            left: 100%;
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: dataStream 3s linear infinite;
-            animation-delay: ${index * 0.5}s;
-            z-index: 1;
-          `;
-          step.style.position = 'relative';
-          step.appendChild(stream);
+    // Auto-animation on scroll into view
+    const transformationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            initializeTransformation();
+          }, 500);
+          
+          transformationObserver.unobserve(entry.target);
         }
       });
-    };
+    }, { threshold: 0.3 });
     
-    addDataStreams();
+    transformationObserver.observe(modernTransformation);
     
-    // Add particle effects for enhanced visual appeal
-    const addParticleEffects = () => {
-      const beforeState = transformationSlider.querySelector('.transformation__state--before');
-      const afterState = transformationSlider.querySelector('.transformation__state--after');
+    // Pause auto-play when not visible
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting && isAutoPlaying) {
+          stopAutoPlay();
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    visibilityObserver.observe(modernTransformation);
+    
+    // Touch gestures for mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+    
+    modernTransformation.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    });
+    
+    modernTransformation.addEventListener('touchend', (e) => {
+      if (!touchStartX || !touchStartY) return;
       
-      // Create floating particles with enhanced effects
-      for (let i = 0; i < 8; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'transformation-particle';
-        particle.style.cssText = `
-          position: absolute;
-          width: ${Math.random() * 4 + 2}px;
-          height: ${Math.random() * 4 + 2}px;
-          background: linear-gradient(45deg, var(--primary), var(--accent));
-          border-radius: 50%;
-          pointer-events: none;
-          opacity: 0.7;
-          animation: particleFloat 8s ease-in-out infinite;
-          animation-delay: ${i * 1.2}s;
-          box-shadow: 0 0 10px rgba(125,95,255,0.5);
-        `;
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+      
+      // Only handle horizontal swipes
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        stopAutoPlay();
         
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        
-        if (i % 2 === 0) {
-          beforeState.appendChild(particle);
+        if (diffX > 0) {
+          // Swipe left - show after
+          showState('after');
         } else {
-          afterState.appendChild(particle);
+          // Swipe right - show before
+          showState('before');
         }
+        
+        animateWorkflowSteps();
       }
       
-      // Add neural network connections
-      for (let i = 0; i < 3; i++) {
-        const connection = document.createElement('div');
-        connection.className = 'neural-connection';
-        connection.style.cssText = `
-          position: absolute;
-          top: ${Math.random() * 80 + 10}%;
-          left: ${Math.random() * 80 + 10}%;
-          width: ${Math.random() * 100 + 50}px;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, var(--primary), transparent);
-          animation: neuralPulse 4s ease-in-out infinite;
-          animation-delay: ${i * 1.5}s;
-          transform: rotate(${Math.random() * 60 - 30}deg);
-          opacity: 0.6;
-        `;
-        
-        if (i % 2 === 0) {
-          beforeState.appendChild(connection);
-        } else {
-          afterState.appendChild(connection);
-        }
-      }
-    };
-    
-    // Add particle animation keyframes
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes floatParticle {
-        0%, 100% { 
-          transform: translateY(0px) translateX(0px) scale(1);
-          opacity: 0.6;
-        }
-        25% { 
-          transform: translateY(-20px) translateX(10px) scale(1.2);
-          opacity: 0.8;
-        }
-        50% { 
-          transform: translateY(-10px) translateX(-5px) scale(0.8);
-          opacity: 0.4;
-        }
-        75% { 
-          transform: translateY(-15px) translateX(8px) scale(1.1);
-          opacity: 0.7;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Initialize particle effects
-    addParticleEffects();
+      touchStartX = 0;
+      touchStartY = 0;
+    });
   }
 })();
 
