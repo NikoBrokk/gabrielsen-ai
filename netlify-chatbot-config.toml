@@ -1,0 +1,22 @@
+# ⚠️ VIKTIG: Denne filen må plasseres som "netlify.toml" 
+# i ROT-MAPPEN til askerbot-demo prosjektet på Netlify
+# (ikke i gabrielsen-ai prosjektet)
+
+[build]
+  publish = "."
+
+# Security headers - KRITISK for å tillate iframe embedding
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Tillat at chatboten kan vises i iframe på gabrielsen.ai
+    Content-Security-Policy = "frame-ancestors 'self' https://gabrielsen.ai https://*.gabrielsen.ai http://localhost:* http://localhost:3000"
+    
+    # Tillat cross-origin requests
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type"
+    
+    # Fjern X-Frame-Options for å la CSP frame-ancestors styre
+    # X-Frame-Options = "DENY" ville blokkert iframe
+

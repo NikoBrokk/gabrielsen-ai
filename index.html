@@ -773,6 +773,28 @@
         <p>© <span id="year"></span> GABRIELSEN AI · Nikolai Brokhaug Gabrielsen · Asker</p>
       </div>
     </footer>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbotWidget">
+      <button class="chatbot-toggle" id="chatbotToggle" aria-label="Åpne chatbot">
+        <span class="chatbot-toggle__icon">💬</span>
+      </button>
+      <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+          <span class="chatbot-header__title">Chat med oss</span>
+          <button class="chatbot-close" id="chatbotClose" aria-label="Lukk chatbot">×</button>
+        </div>
+        <iframe 
+          src="https://askerbot-demo.netlify.app/" 
+          class="chatbot-iframe"
+          title="Gabrielsen AI Chatbot"
+          allow="clipboard-write; cross-origin-isolated"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
   </body>
   </html>
 

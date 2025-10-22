@@ -1418,4 +1418,36 @@ Sendt fra gabrielsen.ai kontakt-skjema
   }
 })();
 
+/* ================================================
+   Chatbot Widget Toggle
+   ================================================ */
+
+(function() {
+  const chatbotToggle = document.getElementById('chatbotToggle');
+  const chatbotClose = document.getElementById('chatbotClose');
+  const chatbotContainer = document.getElementById('chatbotContainer');
+
+  if (chatbotToggle && chatbotClose && chatbotContainer) {
+    // Open chatbot
+    chatbotToggle.addEventListener('click', function() {
+      chatbotContainer.classList.add('active');
+      chatbotToggle.style.display = 'none';
+    });
+
+    // Close chatbot
+    chatbotClose.addEventListener('click', function() {
+      chatbotContainer.classList.remove('active');
+      chatbotToggle.style.display = 'flex';
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && chatbotContainer.classList.contains('active')) {
+        chatbotContainer.classList.remove('active');
+        chatbotToggle.style.display = 'flex';
+      }
+    });
+  }
+})();
+
 
